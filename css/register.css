@@ -1,0 +1,43 @@
+#container{
+  display: block;
+  width: 35%;
+  height: auto;
+  margin: 0 auto;
+}
+#register{
+    text-align: center;
+    font-size:40px;
+    color:#03cf5d;
+}
+p{
+    margin-block-start:0.1em;
+    margin-block-end: 0.1em;
+    font-size: 1em;
+}
+.inputText{
+    width: 100%;
+    height: 30px;
+}
+.inputText > input{
+    width:100%;
+    height:25px;
+}
+.inputText > select{
+    width:100%;
+    height:25px;
+}
+.inputText > span{
+    width: 30%;
+    height: 25px;
+} 
+.inputText > span > input{
+    width:33%;
+    height:25px;
+}
+.inputText > span > select{
+    width:30%;
+    height:25px;
+}
+button{
+    background-color:#03cf5d;
+}

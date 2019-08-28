@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>회원가입란</title>
+</head>
+<link rel="stylesheet" href="./css/register.css">
+
+<body>
+
+    <div id="container">
+        <h3 id=register>회원가입</h3>
+        <div class="input">
+            <p>아이디</p>
+            <div class="inputText">
+                <input type="text" name="id">
+            </div>
+            <div id="nameError"></div>
+        </div>
+        <div class="input">
+            <p>패스워드</p>
+            <div class="inputText">
+                <input type="password" name="password">
+            </div>
+            <div id="passwordError"></div>
+        </div>
+        <div class="input">
+            <p>비밀번호 재확인</p>
+            <div class="inputText">
+                <input type="password" name="repassword">
+            </div>
+            <div id="passwordError"></div>
+        </div>
+        <div class="input">
+            <p>이름</p>
+            <div class="inputText">
+                <input type="text" name="name">
+            </div>
+            <div id="nameError"></div>
+        </div>
+        <div class="input">
+            <p>생년월일</p>
+            <div class="inputText">
+                <span>
+                    <input type="text" name="birthYear" placeholder="년(6자)">
+                </span>
+                <span>
+                    <select>
+                        <option value="">월</option>
+                    </select>
+                </span>
+                <span>
+                    <select>
+                        <option value="">일</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+        <div class="input">
+            <p>성별</p>
+            <div class="inputText">
+                <select>
+                    <option value="">성별</option>
+                    <option value="">남</option>
+                    <option value="">여</option>
+                </select>
+            </div>
+        </div>
+        <div class="input">
+            <p>이메일</p>
+            <div class="inputText">
+                <input type="email" name="email">
+            </div>
+            <div id="emailError"></div>
+        </div>
+        <div class="input">
+            <p>휴대전화</p>
+            <div class="inputText">
+                <input type="text" name="email">
+            </div>
+            <div id="phoneError"></div>
+        </div>
+        <div class="input">
+            <p>관심사</p>
+            <div class="inputText">
+                <input type="interests" name="interests">
+            </div>
+            <div id="interestsError"></div>
+        </div>
+        <div>
+            <span>약관에 동의합니다.</span>
+            <span><input type="checkbox" name="terms"></span>
+        </div>
+        <div>
+            <span><button id="initialization
+                ">초기화</button></span>
+            <span><button id="register
+                    ">가입하기</button></span>
+        </div>
+    </div>
+</body>
+
+</html>
