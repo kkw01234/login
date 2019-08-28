@@ -39,5 +39,14 @@ p{
     height:25px;
 }
 button{
+    display: inline-block;
     background-color:#03cf5d;
+    border:none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size : 15px;
+    margin: 4px 2px;
+    cursor: pointer;   
+    
 }
