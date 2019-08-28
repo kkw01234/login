@@ -1,13 +1,16 @@
+body{
+    background: #eeeeee
+}
 #container{
   display: block;
-  width: 35%;
+  width: 400px;
   height: auto;
   margin: 0 auto;
 }
 #register{
     text-align: center;
     font-size:40px;
-    color:#03cf5d;
+    color:#23cf5d;
 }
 p{
     margin-block-start:0.1em;
@@ -16,34 +19,37 @@ p{
 }
 .inputText{
     width: 100%;
-    height: 30px;
+    height: 35px;
 }
 .inputText > input{
     width:100%;
-    height:25px;
+    height:30px;
 }
 .inputText > select{
     width:100%;
-    height:25px;
+    height:30px;
 }
 .inputText > span{
-    width: 30%;
-    height: 25px;
+    height: 30px;
 } 
 .inputText > span > input{
     width:33%;
-    height:25px;
+    height:80%;
 }
 .inputText > span > select{
     width:30%;
-    height:25px;
+    height:100%;
 }
-button{
+.buttons > span {
     display: inline-block;
-    background-color:#03cf5d;
+
+}
+.buttons > span > button{
+    display: inline-block;
+    background-color:#23cf5d;
     border:none;
     color: white;
-    padding: 15px 32px;
+    padding: 16px 32px;
     text-align: center;
     font-size : 15px;
     margin: 4px 2px;
