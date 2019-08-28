@@ -2,10 +2,10 @@ body{
     background: #eeeeee
 }
 #container{
-  display: block;
-  width: 400px;
-  height: auto;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+
 }
 #register{
     text-align: center;
@@ -17,9 +17,13 @@ p{
     margin-block-end: 0.1em;
     font-size: 1em;
 }
+.input{
+    width: 300px
+}
 .inputText{
     width: 100%;
     height: 35px;
+
 }
 .inputText > input{
     width:100%;
