@@ -34,6 +34,7 @@ const IdError = {
         this.clearIdForm = ()=>{
             idform.value = "";
             insertSentenceHTML(errordiv,"");
+            idchecking =false;
         }
         this.getId = ()=>{
             if(idchecking)
@@ -99,7 +100,8 @@ const passwordError = {
             passwordform.value = "";
             reconfirmationPasswordform.value = "";
             insertSentenceHTML(passwordError,"");
-            insertSentenceHTML(reconfirmationPasswordError,"")
+            insertSentenceHTML(reconfirmationPasswordError,"");
+            passwordChecking =false;
         };
         this.getPassword = () =>{
             if(passwordChecking && reconfirmationPasswordChecking){
@@ -139,7 +141,7 @@ const passwordError = {
 
 
 }
-const nameCheck = {
+const name = {
     init(){
         const nameForm = document.querySelector('input[name=name]');
         this.clearNameForm = ()=>{
@@ -188,6 +190,9 @@ const BirthError = {
             birthMonthform.value = "";
             birthDateform.value = "";
             insertSentenceHTML(errordiv,"");
+            yearChecking =false;
+            monthChecking = false;
+            dateChecking = false;
         }
         this.getBirth = ()=>{
             if(yearChecking && monthChecking && dateChecking){
@@ -299,6 +304,7 @@ const emailError = {
         this.clearEmailForm = ()=>{
             emailform.value = "";
             insertSentenceHTML(errordiv,"");
+            emailChecking =false;
         };
         this.getEmail = () =>{
             if(emailChecking){
@@ -330,6 +336,7 @@ const phoneError = {
         this.clearPhoneForm =  ()=>{
             phoneform.value = "";
             insertSentenceHTML(errordiv, "");
+            phoneChecking =false;
         };
         this.getPhone = ()=>{
             if(phoneChecking){
@@ -359,7 +366,15 @@ const interestsError = {
 }
 const terms = {
     init() {
-
+        const openingmodal = document.querySelector(".terms-container");
+        openingmodal.addEventListener("click",()=>{
+            const modalContent = document.querySelectorAll(".modal-content")[0];
+            console.log(modalContent)
+            modal.style.display = "block";
+            modalContent.appendChild(`<p>안녕하세요!!!</p>`);
+           
+            
+        });
     }
 }
 
@@ -384,7 +399,7 @@ const registerButton = {
         register.addEventListener("click", ()=>{
                 const id = IdError.getId();
                 const password = passwordError.getPassword();
-                const name = nameCheck.getName();
+                const name = name.getName();
                 const birth = BirthError.getBirth();
                 const gender = genderError.getGender();
                 const email = emailError.getEmail();
@@ -399,9 +414,11 @@ const registerButton = {
     }
 }
 
+
+
 IdError.init();
 passwordError.init();
-nameCheck.init();
+name.init();
 BirthError.init();
 genderError.init();
 emailError.init();
