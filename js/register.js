@@ -1,24 +1,14 @@
-
+const user = ['kkw01234'];
 const insertSentenceHTML = (errordiv, sentence, color = "black") => {
     errordiv.innerHTML = sentence;
     errordiv.style.color = color;
 }
 
-const birth = {
-    init() {
-        const birthMonth = document.querySelector("select[name=birthMonth]");
-        for (let i = 1; i <= 12; i++) {
-            birthMonth.insertAdjacentHTML("beforeend", `<option value="${i}">${i}</option>`)
-        }
 
-    }
-}
-birth.init();
-
-const IdError = {
+const id = {
     init() {
         let idchecking =false;
-        this.user = ['kkw01234'];
+       
         const idform = document.querySelector("input[name=id]");
         const errordiv = document.querySelector("#nameError");
         idform.addEventListener("input", () => {
@@ -63,13 +53,13 @@ const IdError = {
         } else return false;
     },
     findUser(id) {
-        return this.user.every((value) => {
+        return user.every((value) => {
             return id !== value;
         });
     }
 }
 
-const passwordError = {
+const password = {
     init() {
         let passwordChecking, reconfirmationPasswordChecking;
         const passwordform = document.querySelector("input[name=password]");
@@ -152,13 +142,16 @@ const name = {
         }
     }
 }
-const BirthError = {
+const birth = {
     init() {
         let yearChecking, monthChecking, dateChecking;
         const birthYearform = document.querySelector('input[name=birthYear]');
         const birthMonthform = document.querySelector('Select[name=birthMonth]');
         const birthDateform = document.querySelector('input[name=birthDate]');
         const errordiv = document.querySelector('#birthError');
+        for (let i = 1; i <= 12; i++) {
+            birthMonthform.insertAdjacentHTML("beforeend", `<option value="${i}">${i}</option>`)
+        }
         birthYearform.addEventListener("input", () => {
             yearChecking = false;
             const sentence = this.checkBirthYear(birthYearform.value);
@@ -274,7 +267,7 @@ const BirthError = {
     }
     
 }
-const genderError = {
+const gender = {
     init() {
         const genderform = document.querySelector("select[name=gender]");
         this.clearGenderform = ()=>{
@@ -288,7 +281,7 @@ const genderError = {
         }
     }
 }
-const emailError = {
+const email = {
     init() {
         let emailChecking = false;
         const emailform = document.querySelector("input[name=email]");
@@ -319,7 +312,7 @@ const emailError = {
         return result ? "" : "이메일 주소를 확인하세요";
     }
 }
-const phoneError = {
+const phone = {
 
     init() {
         let phoneChecking =false;
@@ -349,7 +342,6 @@ const phoneError = {
         if (phone.length < 10 || phone.length > 11) {
             return "형식에 맞지 않는 번호입니다.";
         } else if (!(phone[0]*1 === 0 && phone[1]*1 === 1 && phone[2]*1 === 0)) {
-            console.log(phone[0],phone[1],phone[2]);
             return "형식에 맞지 않는 번호입니다.";
         }
         const regExp = /[0-9]+/;
@@ -382,13 +374,13 @@ const initializationButton = {
     init() {
         const initialization = document.querySelector("#initialization-button");
         initialization.addEventListener("click", () => {
-            IdError.clearIdForm();
-            passwordError.clearPasswordForm();
-            nameCheck.clearNameForm();
-            BirthError.clearBirthForm();
-            genderError.clearGenderform();
-            emailError.clearEmailForm();
-            phoneError.clearPhoneForm();
+            id.clearIdForm();
+            password.clearPasswordForm();
+            name.clearNameForm();
+            birth.clearBirthForm();
+            gender.clearGenderform();
+            email.clearEmailForm();
+            phone.clearPhoneForm();
 
         });
     }
@@ -397,15 +389,16 @@ const registerButton = {
     init(){
         const register = document.querySelector('#register-button');
         register.addEventListener("click", ()=>{
-                const id = IdError.getId();
-                const password = passwordError.getPassword();
-                const name = name.getName();
-                const birth = BirthError.getBirth();
-                const gender = genderError.getGender();
-                const email = emailError.getEmail();
-                const phone = phoneError.getPhone();
-                if(id && password && name && birth && gender && email && phone){
-                    console.log(id, password, name,birth,gender,email,phone);
+                const idValue = id.getId();
+                const passwordValue = password.getPassword();
+                const nameValue = name.getName();
+                const birthValue = birth.getBirth();
+                const genderValue = gender.getGender();
+                const emailValue = email.getEmail();
+                const phoneValue = phone.getPhone();
+                console.log(idValue, passwordValue, nameValue,birthValue,genderValue,emailValue,phoneValue);
+                if(idValue && passwordValue && nameValue && birthValue && genderValue && emailvalue && phoneValue){
+                    console.log(idValue, passwordValue, nameValue,birthValue,genderValue,emailValue,phoneValue);
                 }else
                     console.log("확인하고 읽어주세요");
                 
@@ -416,13 +409,13 @@ const registerButton = {
 
 
 
-IdError.init();
-passwordError.init();
+id.init();
+password.init();
 name.init();
-BirthError.init();
-genderError.init();
-emailError.init();
-phoneError.init();
+birth.init();
+gender.init();
+email.init();
+phone.init();
 interestsError.init();
 terms.init();
 registerButton.init();
