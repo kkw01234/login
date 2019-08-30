@@ -101,16 +101,16 @@ p{
 }
 .tags-input input{
     /* width: 100%; */
-    min-height:30px;
+    min-height:25px;
     border: 0px;
     margin: 1px;
 }
 .tag{
+    display: inline-block;
     min-width : 1em;
     background-color : #cccccc;
     font-size: 100%;
-    margin-left : 0.1em;
-    margin-right : 0.1em;
+    margin: 0.2em 0.2em 0.2em 0.2em;
     cursor:pointer;
     padding : 0.2em 0.1em 0.2em 0.1em;
     border-radius: 0.5em;

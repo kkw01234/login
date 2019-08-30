@@ -165,6 +165,15 @@ const birth = {
             insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
             if (sentence == "") {
                 yearChecking = true;
+                const monthSentence = this.checkBirthYear(birthYearform.value);
+                const dateSentence = this.checkBirthDate(birthYearform.value,birthMonthform.value, birthDateform.value);
+                if(!(monthSentence === '')){
+                    insertSentenceHTML(errordiv, monthChecking, "red");
+                    monthChecking = false;
+                }else if(!(dateSentence === '')){
+                    insertSentenceHTML(errordiv, dateSentence, "red");
+                    dateChecking = false;
+                }
             }
 
         });
@@ -173,8 +182,19 @@ const birth = {
             const sentence = this.checkBirthMonth(birthMonthform.value);
             console.log(birthMonthform.value);
             insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
-            if (sentence == "") {
+            if (sentence === "") {
                 monthChecking = true;
+                const yearSentence = this.checkBirthYear(birthYearform.value);
+                const dateSentence = this.checkBirthDate(birthYearform.value,birthMonthform.value, birthDateform.value);
+                console.log(dateSentence);
+                if(!(yearSentence === '')){
+                    yearChecking = false;
+                    insertSentenceHTML(errordiv, yearSentence, "red");
+                }else if(!(dateSentence === '')){
+                    dateChecking = false;
+                    insertSentenceHTML(errordiv, dateSentence, "red");
+                }
+               
             }
         });
         birthDateform.addEventListener("input", () => {
@@ -202,7 +222,7 @@ const birth = {
         }
     },
     checkBirthYear(year) {
-        if (year.length != 4) {
+        if (year.length !== 4) {
             return "태어난 년도 4자리를 정확하게 입력하세요";
         }
         const date = new Date().getFullYear();
@@ -218,9 +238,8 @@ const birth = {
         return "";
     },
     checkBirthDate(year, month, date) {
-        const birthYear = this.checkBirthYear(year);
-        if (!birthYear == "") {
-            return birthYear;
+        if(year.length!==4){
+            return "태어난 년도 4자리를 정확하게 입력하세요";
         }
         if (date < 0) {
             return `정확히 입력해주세요`;
@@ -368,9 +387,9 @@ const interests = {
             if(!checking && e.keyCode == 8 && interestTag.children.length >1){
                 interestTag.removeChild(interestTag.children[interestTag.children.length-2]);
                 if(!this.checkInterests()){
-                    insertSentenceHTML(document.querySelector("#interestError"),"관심사를 3개이상 입력해주세요", "red");
+                    insertSentenceHTML(document.querySelector("#interestsError"),"관심사를 3개이상 입력해주세요", "red");
                 }else
-                    insertSentenceHTML(document.querySelector('#interestError'),"");
+                    insertSentenceHTML(document.querySelector('#interestsError'),"");
 
             }
         });
@@ -430,9 +449,11 @@ const terms = {
         const openingmodal = document.querySelector(".terms-container");
         openingmodal.addEventListener("click", () => { //모달 띄우기
             const modalContent = document.querySelectorAll(".modal-content")[0];
-
+            modalContent.innerHTML="";
             modal.style.display = "block";
-            modalContent.innerHTML = this.makeTerms();
+            this.makeTerms(modalContent)
+
+            
             const closingterms = modalContent.querySelector(".close");
             closingterms.addEventListener("click", () => {
                 modal.style.display = "none";
@@ -454,13 +475,23 @@ const terms = {
             });
         });
     },
-    makeTerms() { //바꿔야함
-
-        return `
-        <div class="close"><img src="./img/close.svg" width="20px" height="20px"></img></div>
-        <h4>개인정보 수집 및 이용에 대한 안내</h4>
-        <textarea class="terms" readonly>
-        정보통신망법 규정에 따라 부스트캠프에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.
+    makeTerms(div) { //바꿔야함
+        // const div = document.createElement('div');
+        const closeDiv = document.createElement('div');
+        const img = document.createElement('img');
+        const title = document.createElement('h4');
+        const textarea = document.createElement('textarea');
+        const centerDiv =document.createElement('div');
+        const button = document.createElement('button');
+        closeDiv.className = "close";
+        img.src="./img/close.svg";
+        img.style.width="20px";
+        img.style.height="20px";
+        closeDiv.appendChild(img);
+        title.textContent = "개인정보 수집 및 이용에 대한 안내";
+        textarea.className = "terms";
+        textarea.readOnly = true;
+        textarea.textContent = `  정보통신망법 규정에 따라 부스트캠프에 회원가입 신청하시는 분께 수집하는 개인정보의 항목, 개인정보의 수집 및 이용목적, 개인정보의 보유 및 이용기간을 안내 드리오니 자세히 읽은 후 동의하여 주시기 바랍니다.
         
         1. 수집하는 개인정보의 항목
         최초 회원가입 당시 아래와 같은 최소한의 개인정보를 필수항목으로 수집하고 있습니다.
@@ -490,10 +521,20 @@ const terms = {
         보존 기간 : 3년
         - 웹사이트 방문기록
         보존 이유 : 통신비밀보호법
-        보존 기간 : 3개월</textarea>
-        <div style="text-align:center">
-        <button id="terms-btn" class="btn btn-disabled btn-small" disabled='disabled'>가입</button>
-        </div>`;
+        보존 기간 : 3개월`;
+        centerDiv.style.textAlign = "center";
+        button.id = 'terms-btn';
+        button.className = "btn btn-disabled btn-small";
+        button.disabled = 'disabled';
+        button.textContent = "가입";
+        centerDiv.appendChild(button);
+
+        div.appendChild(closeDiv);
+        div.appendChild(title);
+        div.appendChild(textarea);
+        div.appendChild(centerDiv);
+      
+        
     },
     clickButton() {
         const termcheckbox = document.querySelector("input[name=terms]");
@@ -528,6 +569,7 @@ const initializationButton = {
             });
             modalContent.appendChild(deleteButton);
             modalContent.appendChild(cancelButton);
+                 
             modalContent.style.width = "25%";
             modalContent.style.height = "10%";
             modal.style.display = 'block';
@@ -561,9 +603,10 @@ const registerButton = {
             const emailValue = email.getEmail();
             const phoneValue = phone.getPhone();
             const interestsValue = interests.getInterests();
-            console.log(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue);
-            if (idValue && passwordValue && nameValue && birthValue && genderValue && emailValue && phoneValue && interestsValue) {
-               const result = this.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue);
+            const checkTerm = document.querySelector("input[name=terms]").checked;
+            console.log(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue,checkTerm);
+            if (idValue && passwordValue && nameValue && birthValue && genderValue && emailValue && phoneValue && interestsValue && checkTerm) {
+               const result = this.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue,checkTerm);
                 console.log(result);
                 window.location.href="./main.html";
             } else
@@ -581,7 +624,7 @@ const registerButton = {
             gender : genderValue,
             email : emailValue,
             phone : phoneValue,
-            interests : interestsValue
+            interests : interestsValue,
         });  
     }
 }
