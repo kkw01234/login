@@ -6,8 +6,10 @@ const loginPage={
     },
     makeLoginPage(){
         const login = document.createElement("div");
-        const newContent = document.createTextNode("ghdksf");
+        
         login.appendChild(newContent);
         document.body.insertAdjacentElement("afterend",login);
     }
 }
+
+//loginPage.init();
