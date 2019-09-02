@@ -484,6 +484,8 @@ const registerForm = () => {
             interestForm.addEventListener('keydown', (e) => {
                 if (!checking && e.keyCode == 8 && interestTag.children.length > 1) {
                     interestTag.removeChild(interestTag.children[interestTag.children.length - 2]);
+                    this.interestList.pop();
+                    console.log(this.interestList);
                     if (!this.checkInterests()) {
                         insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
                     } else
@@ -520,7 +522,6 @@ const registerForm = () => {
         },
         checkComma(value) {
             const splitValue = value.split(",");
-            console.log(splitValue);
             if (splitValue.length >= 2 && splitValue[0] !== "") {
                 return splitValue[0];
             } else if (splitValue[0] == "") {
@@ -551,8 +552,6 @@ const registerForm = () => {
         },
         clearInterests() {
             const interestTag = document.querySelector(".tags-input");
-            console.log(interestTag.children);
-            console.log(interestTag.firstElementChild);
             while (interestTag.firstElementChild.className == 'tag') {
                 interestTag.removeChild(interestTag.firstElementChild);
             }
