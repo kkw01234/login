@@ -7,14 +7,16 @@ function loginPage() {
    
     const loginForm = {
         init() {
-    
+            
         },
         makeLoginPage() {
             const loginContainer = document.createElement("div");
+            const logoContainer = document.createElement("div");
             const idContainer = document.createElement("div");
             const passwordContainer = document.createElement("div");
             const loginButtonContainer = document.createElement("div");
             const registerButtonContainer = document.createElement("div");
+            logoContainer.innerHTML = "<header>BoostCamp Login</header>"
             loginContainer.className = "container";
             loginContainer.id = "login-container";
             this.getloginContainer = () => {
@@ -22,7 +24,6 @@ function loginPage() {
             }
             // loginContainer.style.textAlign = "center";
             idContainer.className = "row";
-            idContainer.style.marginTop = '10%';
             passwordContainer.className = "row";
             loginButtonContainer.className = "row";
             registerButtonContainer.className = "row";
@@ -30,6 +31,7 @@ function loginPage() {
             this.makeForm(passwordContainer, "password");
             this.makeLoginButton(loginButtonContainer, "login");
             this.makeRegisterButton(registerButtonContainer, "회원가입");
+            loginContainer.appendChild(logoContainer);
             loginContainer.appendChild(idContainer);
             loginContainer.appendChild(passwordContainer);
             loginContainer.appendChild(loginButtonContainer);
@@ -45,7 +47,7 @@ function loginPage() {
             const align2 = document.createElement('div');
             align1.className = "col-md-3 col-xs-3 col-sm-3";
             align2.className = "col-md-7 col-xs-7 col-sm-7 loginform-container";
-            align2.innerHTML = `<input type='${type == "id" ? "text" : "password"}' class="form-control" name="${type}" placeholder="${type}">`;
+            align2.innerHTML = `<input type='${type == "id" ? "text" : "password"}' class="form-control input-lg" name="${type}" placeholder="${type}">`;
 
             container.appendChild(align1);
             container.appendChild(align2);
@@ -96,6 +98,7 @@ function loginPage() {
     const body = document.querySelector('#main');
     body.innerHTML = "";
     body.appendChild(loginForm.makeLoginPage());
+    body.appendChild(footerForm.makeFooter());
    
 }
 

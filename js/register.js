@@ -1,10 +1,11 @@
 
 const registerForm = () => {
-   
-    document.querySelector("#main").innerHTML = (function () {
+    const body = document.querySelector("#main");
+    body.innerHTML = (function () {
         return `
+        <header>회원가입</header>
     <div id="register-container">
-    <h3 id="register">회원가입</h3>
+    <form action="#" name="register" method="post">
     <div class="input-container">
         <p>아이디</p>
         <div class="inputText">
@@ -81,8 +82,9 @@ const registerForm = () => {
     </div>
     <div class="btn-container">
         <button class="btn btn-middle" id="initialization-button">초기화</button>
-        <button class="btn btn-middle" id="register-button">가입하기</button>
+        <submit class="btn btn-middle" id="register-button">가입하기</button>
     </div>
+    </form>
 </div>
 <div id="register-modal" class="modal">
     <div class="modal-content">
@@ -91,7 +93,9 @@ const registerForm = () => {
 </div>
 `
     })();
+    body.appendChild(footerForm.makeFooter());
     const modal = document.querySelector("#register-modal");
+  
     const user = ['kkw01234'];
     const insertSentenceHTML = (errordiv, sentence, color = "black") => {
         errordiv.innerHTML = sentence;
@@ -472,7 +476,7 @@ const registerForm = () => {
     }
     const interests = {
         init() {
-            this.interest = [];
+            this.interestList = [];
             let checking = false;
             const interestTag = document.querySelector(".tags-input");
             const interestForm = document.querySelector("input[name=interests]");
@@ -487,6 +491,7 @@ const registerForm = () => {
                 }
             });
             interestForm.addEventListener("input", (e) => {
+
                 if (e.keyCode == 8) return;
                 if (interestForm.value.length === 0) {
                     checking = false;
@@ -494,11 +499,13 @@ const registerForm = () => {
                 }
                 checking = true;
                 const result = this.checkComma(interestForm.value);
-                if (result) {
+                if (result === "removeComma") {
+                    interestForm.value = "";
+                } else if (result) {
                     const span = document.createElement('span');
                     span.classList.add("tag");
                     span.textContent = interestForm.value.split(",")[0];
-                    this.interest.push(span.textContent);
+                    this.interestList.push(span.textContent);
                     span.appendChild(this.makeClose(span));
                     interestTag.insertBefore(span, interestForm);
                     interestForm.value = "";
@@ -511,9 +518,14 @@ const registerForm = () => {
             });
         },
         checkComma(value) {
-            if (value[value.length - 1] === ",") {
-                return true;
-            } else return false;
+            const splitValue = value.split(",");
+            console.log(splitValue);
+            if (splitValue.length >= 2 && splitValue[0] !== "") {
+                return splitValue[0];
+            } else if (splitValue[0] == "") {
+                return "removeComma";
+            }
+            return "";
         },
         makeClose(span) {
             const closeButton = document.createElement("img");
@@ -527,14 +539,22 @@ const registerForm = () => {
             return closeButton;
         },
         checkInterests() {
-            if (this.interest.length < 3) {
+            if (this.interestList.length < 3) {
                 return false;
             } else return true;
         },
         getInterests() {
             if (this.checkInterests()) {
-                return this.interest;
+                return this.interestList;
             } else return false;
+        },
+        clearInterests() {
+            const interestTag = document.querySelector(".tags-input");
+            console.log(interestTag.children);
+            console.log(interestTag.firstElementChild);
+            while (interestTag.firstElementChild.className == 'tag') {
+                interestTag.removeChild(interestTag.firstElementChild);
+            }
         }
     }
     const terms = {
@@ -635,7 +655,7 @@ const registerForm = () => {
             modal.style.display = "none";
 
 
-        }
+        },
     }
 
     const initializationButton = {
@@ -643,7 +663,7 @@ const registerForm = () => {
             const initialization = document.querySelector("#initialization-button");
 
             initialization.addEventListener("click", () => {
-                const modalContent = document.querySelectorAll(".modal-content")[0];
+                const modalContent = document.querySelector(".modal-content");
                 const p = document.createElement('p');
                 p.textContent = "정말로 삭제하시겠습니까?";
                 modalContent.innerHTML = "";
@@ -656,15 +676,13 @@ const registerForm = () => {
                 cancelButton.className = "btn btn-small";
                 cancelButton.textContent = "취소";
                 cancelButton.addEventListener("click", () => {
-                    modalContent.style.width = "70%";
-                    modalContent.style.height = "50%";
+                    modalContent.className="modal-content modal-large";
                     modal.style.display = 'none';
                 });
                 modalContent.appendChild(deleteButton);
                 modalContent.appendChild(cancelButton);
 
-                modalContent.style.width = "25%";
-                modalContent.style.height = "10%";
+                modalContent.className="modal-content modal-small";
                 console.log(modal);
                 modal.style.display = 'block';
 
@@ -673,6 +691,7 @@ const registerForm = () => {
             });
         },
         deleteAll() {
+            const modalContent = document.querySelector(".modal-content");
             id.clearIdForm();
             password.clearPasswordForm();
             name.clearNameForm();
@@ -680,8 +699,8 @@ const registerForm = () => {
             gender.clearGenderform();
             email.clearEmailForm();
             phone.clearPhoneForm();
-            modalContent.style.width = "70%";
-            modalContent.style.height = "50%";
+            interests.clearInterests();
+            document.querySelector("input[name=terms]").checked = false;
             modal.style.display = 'none';
         }
     }
@@ -698,13 +717,46 @@ const registerForm = () => {
                 const phoneValue = phone.getPhone();
                 const interestsValue = interests.getInterests();
                 const checkTerm = document.querySelector("input[name=terms]").checked;
-                console.log(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, checkTerm);
-                if (idValue && passwordValue && nameValue && birthValue && genderValue && emailValue && phoneValue && interestsValue && checkTerm) {
-                    const result = this.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
-                    console.log(result);
-                    window.location.href = "./main.html";
-                } else
-                    console.log("확인하고 읽어주세요");
+                const registerUser = {
+                    아이디: idValue,
+                    패스워드: passwordValue,
+                    이름: nameValue,
+                    생년월일: birthValue,
+                    셩별: genderValue,
+                    이메일: emailValue,
+                    휴대전화: phoneValue,
+                    관심사: interestsValue,
+                    약관: checkTerm
+                }
+                for (let key in registerUser) {
+
+                    if (!registerUser[key]) {
+                        const modalContent = document.querySelector(".modal-content");
+                        const content = document.createElement('p');
+                        const button = document.createElement("button");
+                        content.textContent = `${key}를(을) 확인해 주세요`;
+                        button.className = "btn btn-small";
+                        button.textContent = "확인";
+                        button.addEventListener("click",()=>{
+                            modalContent.innerHTML = "";
+                            modal.style.display="none";
+                        });
+                        modalContent.innerHTML ="";
+                        modalContent.appendChild(content);
+                        modalContent.appendChild(button);
+                        modalContent.className= "modal-content modal-small";
+                        modal.style.display = "block";
+                        
+                    }
+                    return;
+                }
+
+
+
+                const result = this.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
+                console.log(result);
+                window.location.href = "./main.html";
+
 
 
             });
