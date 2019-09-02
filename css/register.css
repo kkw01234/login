@@ -7,7 +7,7 @@ body{
 }
 header{
     text-align: center;
-    font-size:40px;
+    font-size:2.2em;
     color:#23cf5d;
 }
 #register-container{
@@ -15,21 +15,19 @@ header{
   flex-direction: column;
   align-items:center;
 }
-#register{
-   
-}
+
 p{
     margin-block-start:0.1em;
     margin-block-end: 0.1em;
     font-size: 1em;
 }
 .input-container {
-    width: 400px
+    width: 32em;
 }
 .inputText {
     display: flex;
     width: 100%;
-    height: 35px;
+    height: 3em;
 
 }
 
@@ -58,7 +56,7 @@ p{
     height:36px;
 }
 .terms-container{
-    width: 400px;
+    width: 32em;
 }
 
 /*버튼*/
@@ -85,12 +83,12 @@ p{
 .btn.btn-small{
     width:6em;
     height: 2em;
-    font-size:15px
+    font-size:1em;
 }
 .btn.btn-middle{
     width:6em;
     height:2em;
-    font-size: 25px;
+    font-size: 1.8em;
 }
 
 .terms{
@@ -140,7 +138,3 @@ footer{
     height: 4em;
 }
 
-/*Login*/
-#login-container{
-    margin: 20% auto;
-}

@@ -12,19 +12,20 @@
     
 }
 .modal-content{
-    /* display:flex; */
-    /* flex-direction: column; */
     background-color : #fefefe;
-    margin: 15% auto;
-    padding: 20px;
+    margin: 10% auto;
+    padding: 1.25em;
     border: 1px solid #aaa;
     border-radius: 0.5em;
-    /* align-items: center; */
+
+}
+.modal-content > p{
+    text-align: center;
 }
 
 .modal-content.modal-small{
     width: 25%;
-    height: 15%;
+    height: 10%;
 }
 .modal-content.modal-middle{
     width: 50%;
@@ -32,11 +33,11 @@
 }
 .modal-content.modal-large{
     width: 75%;
-    height: 60%;
+    height: 50%;
 }
 .close{
     float: right;
-    font-size: 28px;
+    font-size: 1.6em;
     font-weight: bold;
 }
 .close:hover
