@@ -5,7 +5,7 @@ const registerForm = () => {
         return `
         <header>회원가입</header>
     <div id="register-container">
-    <form action="#" name="register" method="post">
+    <form action="" name="register" method="post" onsubmit="return registerButton.checkRegisterForm()">
     <div class="input-container">
         <p>아이디</p>
         <div class="inputText">
@@ -81,8 +81,8 @@ const registerForm = () => {
         <input type="checkbox" name="terms" disabled="disabled">
     </div>
     <div class="btn-container">
-        <button class="btn btn-middle" id="initialization-button">초기화</button>
-        <submit class="btn btn-middle" id="register-button">가입하기</button>
+        <button type="button" class="btn btn-middle" id="initialization-button">초기화</button>
+        <input type="submit" value="가입하기" class="btn btn-middle" id="register-button"></input>
     </div>
     </form>
 </div>
@@ -95,7 +95,7 @@ const registerForm = () => {
     })();
     body.appendChild(footerForm.makeFooter());
     const modal = document.querySelector("#register-modal");
-  
+
     const user = ['kkw01234'];
     const insertSentenceHTML = (errordiv, sentence, color = "black") => {
         errordiv.innerHTML = sentence;
@@ -103,7 +103,7 @@ const registerForm = () => {
     }
 
 
-    const id = {
+    this.id = {
         init() {
             let idchecking = false;
 
@@ -159,7 +159,7 @@ const registerForm = () => {
 
     }
 
-    const password = {
+    this.password = {
         init() {
             let passwordChecking, reconfirmationPasswordChecking;
             const passwordform = document.querySelector("input[name=password]");
@@ -232,7 +232,7 @@ const registerForm = () => {
 
 
     }
-    const name = {
+    this.registerName = {
         init() {
             const nameForm = document.querySelector('input[name=name]');
             this.clearNameForm = () => {
@@ -246,7 +246,8 @@ const registerForm = () => {
             }
         }
     }
-    const birth = {
+   
+    this.birth = {
         init() {
             let yearChecking, monthChecking, dateChecking;
             const birthYearform = document.querySelector('input[name=birthYear]');
@@ -390,7 +391,7 @@ const registerForm = () => {
         }
 
     }
-    const gender = {
+    this.gender = {
         init() {
             const genderform = document.querySelector("select[name=gender]");
             this.clearGenderform = () => {
@@ -404,7 +405,7 @@ const registerForm = () => {
             }
         }
     }
-    const email = {
+    this.email = {
         init() {
             let emailChecking = false;
             const emailform = document.querySelector("input[name=email]");
@@ -436,7 +437,7 @@ const registerForm = () => {
             return result ? "" : "이메일 주소를 확인하세요";
         }
     }
-    const phone = {
+    this.phone = {
 
         init() {
             let phoneChecking = false;
@@ -474,7 +475,7 @@ const registerForm = () => {
             return result ? "" : "형식에 맞지 않는 번호입니다.";
         }
     }
-    const interests = {
+    this.interests = {
         init() {
             this.interestList = [];
             let checking = false;
@@ -557,11 +558,12 @@ const registerForm = () => {
             }
         }
     }
-    const terms = {
+    this.terms = {
         init() {
             const openingmodal = document.querySelector(".terms-container");
             openingmodal.addEventListener("click", () => { //모달 띄우기
                 const modalContent = document.querySelectorAll(".modal-content")[0];
+                modalContent.className = "modal-content modal-large";
                 modalContent.innerHTML = "";
                 modal.style.display = "block";
                 this.makeTerms(modalContent)
@@ -589,12 +591,11 @@ const registerForm = () => {
             });
         },
         makeTerms(div) { //바꿔야함
-            // const div = document.createElement('div');
             const closeDiv = document.createElement('div');
             const img = document.createElement('img');
             const title = document.createElement('h4');
             const textarea = document.createElement('textarea');
-            const centerDiv = document.createElement('div');
+            const btnContainer = document.createElement('div');
             const button = document.createElement('button');
             closeDiv.className = "close";
             img.src = "./img/close.svg";
@@ -635,17 +636,17 @@ const registerForm = () => {
         - 웹사이트 방문기록
         보존 이유 : 통신비밀보호법
         보존 기간 : 3개월`;
-            centerDiv.style.textAlign = "center";
+            btnContainer.className = "btn-container";
             button.id = 'terms-btn';
             button.className = "btn btn-disabled btn-small";
             button.disabled = 'disabled';
             button.textContent = "가입";
-            centerDiv.appendChild(button);
+            btnContainer.appendChild(button);
 
             div.appendChild(closeDiv);
             div.appendChild(title);
             div.appendChild(textarea);
-            div.appendChild(centerDiv);
+            div.appendChild(btnContainer);
 
 
         },
@@ -658,43 +659,45 @@ const registerForm = () => {
         },
     }
 
-    const initializationButton = {
+    this.initializationButton = {
         init() {
             const initialization = document.querySelector("#initialization-button");
 
-            initialization.addEventListener("click", () => {
-                const modalContent = document.querySelector(".modal-content");
-                const p = document.createElement('p');
-                p.textContent = "정말로 삭제하시겠습니까?";
-                modalContent.innerHTML = "";
-                modalContent.appendChild(p);
-                const deleteButton = document.createElement('button');
-                const cancelButton = document.createElement('button');
-                deleteButton.className = "btn btn-small";
-                deleteButton.textContent = "삭제";
-                deleteButton.addEventListener("click", this.deleteAll);
-                cancelButton.className = "btn btn-small";
-                cancelButton.textContent = "취소";
-                cancelButton.addEventListener("click", () => {
-                    modalContent.className="modal-content modal-large";
-                    modal.style.display = 'none';
-                });
-                modalContent.appendChild(deleteButton);
-                modalContent.appendChild(cancelButton);
-
-                modalContent.className="modal-content modal-small";
-                console.log(modal);
-                modal.style.display = 'block';
-
-
-
+            initialization.addEventListener("click", this.initializationListener);
+        },
+        initializationListener(){
+            const modalContent = document.querySelector(".modal-content");
+            const p = document.createElement('p');
+            p.textContent = "정말로 삭제하시겠습니까?";
+            modalContent.innerHTML = "";
+            modalContent.appendChild(p);
+            const btnContainer = document.createElement('div');
+            btnContainer.className = "btn-container";
+            const deleteButton = document.createElement('button');
+            const cancelButton = document.createElement('button');
+            deleteButton.className = "btn btn-small";
+            deleteButton.textContent = "삭제";
+            deleteButton.addEventListener("click", initializationButton.deleteAll);
+           
+            cancelButton.className = "btn btn-small";
+            cancelButton.textContent = "취소";
+            cancelButton.addEventListener("click", () => {
+                modalContent.className = "modal-content modal-large";
+                modal.style.display = 'none';
             });
+            btnContainer.appendChild(deleteButton);
+            btnContainer.appendChild(cancelButton);
+            modalContent.appendChild(btnContainer);
+
+            modalContent.className = "modal-content modal-small";
+            modal.style.display = 'block';
+            return false;
         },
         deleteAll() {
-            const modalContent = document.querySelector(".modal-content");
+            console.log("add");
             id.clearIdForm();
             password.clearPasswordForm();
-            name.clearNameForm();
+            registerName.clearNameForm();
             birth.clearBirthForm();
             gender.clearGenderform();
             email.clearEmailForm();
@@ -704,62 +707,10 @@ const registerForm = () => {
             modal.style.display = 'none';
         }
     }
-    const registerButton = {
+    this.registerButton = {
         init() {
             const register = document.querySelector('#register-button');
-            register.addEventListener("click", () => {
-                const idValue = id.getId();
-                const passwordValue = password.getPassword();
-                const nameValue = name.getName();
-                const birthValue = birth.getBirth();
-                const genderValue = gender.getGender();
-                const emailValue = email.getEmail();
-                const phoneValue = phone.getPhone();
-                const interestsValue = interests.getInterests();
-                const checkTerm = document.querySelector("input[name=terms]").checked;
-                const registerUser = {
-                    아이디: idValue,
-                    패스워드: passwordValue,
-                    이름: nameValue,
-                    생년월일: birthValue,
-                    셩별: genderValue,
-                    이메일: emailValue,
-                    휴대전화: phoneValue,
-                    관심사: interestsValue,
-                    약관: checkTerm
-                }
-                for (let key in registerUser) {
-
-                    if (!registerUser[key]) {
-                        const modalContent = document.querySelector(".modal-content");
-                        const content = document.createElement('p');
-                        const button = document.createElement("button");
-                        content.textContent = `${key}를(을) 확인해 주세요`;
-                        button.className = "btn btn-small";
-                        button.textContent = "확인";
-                        button.addEventListener("click",()=>{
-                            modalContent.innerHTML = "";
-                            modal.style.display="none";
-                        });
-                        modalContent.innerHTML ="";
-                        modalContent.appendChild(content);
-                        modalContent.appendChild(button);
-                        modalContent.className= "modal-content modal-small";
-                        modal.style.display = "block";
-                        
-                    }
-                    return;
-                }
-
-
-
-                const result = this.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
-                console.log(result);
-                window.location.href = "./main.html";
-
-
-
-            });
+            // register.addEventListener("click", this.checkRegisterForm);
         },
         makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue) {
             return JSON.stringify({
@@ -772,11 +723,64 @@ const registerForm = () => {
                 phone: phoneValue,
                 interests: interestsValue,
             });
+        },
+        checkRegisterForm() {
+            const idValue = id.getId();
+            const passwordValue = password.getPassword();
+            const nameValue = registerName.getName();
+            const birthValue = birth.getBirth();
+            const genderValue = gender.getGender();
+            const emailValue = email.getEmail();
+            const phoneValue = phone.getPhone();
+            const interestsValue = interests.getInterests();
+            const checkTerm = document.querySelector("input[name=terms]").checked;
+            const registerUser = {
+                아이디: idValue,
+                패스워드: passwordValue,
+                이름: nameValue,
+                생년월일: birthValue,
+                셩별: genderValue,
+                이메일: emailValue,
+                휴대전화: phoneValue,
+                관심사: interestsValue,
+                약관: checkTerm
+            }
+            for (let key in registerUser) {
+
+                if (!registerUser[key]) {
+                    const modalContent = document.querySelector(".modal-content");
+                    const content = document.createElement('p');
+                    const btnContainer= document.createElement('div');
+                    const button = document.createElement("button");
+                    content.textContent = `${key}를(을) 확인해 주세요`;
+                    btnContainer.className = "btn-container";
+                    button.className = "btn btn-small";
+                    button.textContent = "확인";
+                    button.addEventListener("click", () => {
+                        modalContent.innerHTML = "";
+                        modal.style.display = "none";
+                    });
+                    modalContent.innerHTML = "";
+                    btnContainer.appendChild(button);
+                    modalContent.appendChild(content);
+                    modalContent.appendChild(btnContainer);
+                    modalContent.className = "modal-content modal-small";
+                    modal.style.display = "block";
+                    return false;
+                }
+
+            }
+
+
+
+            const result = this.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
+            console.log(result);
+            return true;
         }
     }
     id.init();
     password.init();
-    name.init();
+    registerName.init();
     birth.init();
     gender.init();
     email.init();
@@ -786,4 +790,3 @@ const registerForm = () => {
     registerButton.init();
     initializationButton.init();
 };
-

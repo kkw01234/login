@@ -63,9 +63,9 @@ p{
 
 /*버튼*/
 .btn-container{
-    display: flex;
-    justify-content: space-around;
-    width:400px;
+    display: inline-flex;
+    justify-content: center;
+    width:100%;
 }
 .btn{
     display: flex;
@@ -88,8 +88,8 @@ p{
     font-size:15px
 }
 .btn.btn-middle{
-    width:9em;
-    height:3em;
+    width:6em;
+    height:2em;
     font-size: 25px;
 }
 
@@ -100,7 +100,8 @@ p{
 }
 /*태그 관련*/
 .tags-input{
-    display: inline-block;
+    display: flex;
+    flex-wrap:wrap;
     width:100%;
     min-height: 35px;
     background-color: #ffffff;
@@ -108,7 +109,7 @@ p{
     
 }
 .tags-input input{
-    /* width: 100%; */
+    width: 100%;
     min-height:25px;
     border: 0px;
     margin: 1px;
@@ -116,7 +117,7 @@ p{
 .tag{
     display: inline-block;
     min-width : 1em;
-    background-color : #cccccc;
+    background-color : greenyellow;
     font-size: 100%;
     margin: 0.2em 0.2em 0.2em 0.2em;
     cursor:pointer;
@@ -137,4 +138,9 @@ footer{
     
     top:7em;
     height: 4em;
+}
+
+/*Login*/
+#login-container{
+    margin: 20% auto;
 }
