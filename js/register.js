@@ -1,6 +1,28 @@
 import { insertSentenceHTML,user } from "./utils.js";
 
-// const user = ['kkw01234'];
+const registerEnum = {
+    INVALID_ID :{content :`5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.`,color:"red"},
+    EXIST_USER : {content : "이미 사용중인 아이디 입니다.", color : "red"},
+    SAFETY_PASSWORD :{content : "안전한 비밀번호 입니다.", color :"green"},
+    IMPROPER_LENGTH_PASSWORD:{content :"8자 이상 16자 이하로 입력해주세요",color:"red"},
+    NOT_FIND_CAPITAL_LETTER:{content:"영문 대문자를 최소 1자 이상 포함해주세요",color:"red"},
+    NOT_FIND_NUMBER:{content: "숫자를 최소 1자 이상 포함해주세요", color:"red"},
+    NOT_FIND_SPECIAL_LETTER:{content:"특수문자를 최소 1자 이상 포함해주세요", color:"red"},
+    NOT_MATCHING_PASSWORD:{content:`비밀번호가 일치하지 않습니다.`, color:`red`},
+    MATCHING_PASSWORD:{content:"비밀번호가 일치합니다.", color:"green"},
+    INVALID_BIRTH_YEAR:{content:`태어난 년도 4자리를 정확하게 입력하세요`, color: `red`},
+    UNABLE_REGISTER:{content:`15세 이상 99세 이하일 경우만 회원가입 하실 수 있습니다.`,color:`red`},
+    INVALID_BIRTH_MONTH:{content:`월을 선택해 주세요`, color:"red"},
+    INVALID_BIRTH_DATE:{content:`${this.month}는 ${this.lastdate}까지 있습니다.`, color:"red",setDate(month, lastdate){
+        this.month = month;
+        this.lastdate = lastdate;
+        return this;
+    }},
+    INVALID_PHONE_NUMBER:{content:"형식에 맞지않는 번호입니다.",color:`red`},
+    OVER_THREE_TAGS:{content:"관심사를 3개 이상 입력해 주세요", color:`red`},
+    CHECK_INPUT_USER:{content:`${this.key}를 확인해주세요`,color:`red`,setKey(key){this.key = key;return this;}}
+
+}
 
 export const register = {
     render() {
@@ -145,9 +167,7 @@ export const register = {
             } else return false;
         },
         findUser(id) {
-            return user.every((value) => {
-                return id !== value;
-            });
+            return user.id !== id;
         },
 
     },
