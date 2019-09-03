@@ -1,23 +1,28 @@
-(function(){
+import {registerForm} from "./register.js";
+(function () {
     const body = document.querySelector('body');
     const routerMap = {
-        '' : ()=>{
-            mainPage();
+        '': () => {
+            body.innerHTML = mainPage();
         },
-        'loginpage' : ()=>{
-            loginPage();
+        'loginpage': () => {
+            body.innerHTML = "";
+            body.appendChild(loginForm.makeLoginPage());
+            body.appendChild(footerForm.makeFooter());
         },
-        'register' : ()=>{
-            registerForm();
+        'register': () => {
+            body.innerHTML = registerForm.makeRegisterForm();
+            registerForm.init();
+            body.appendChild(footerForm.makeFooter());
         }
     }
-    const router = ()=>{
-        const hashValue = location.hash.replace('#','');
+    const router = () => {
+        const hashValue = location.hash.replace('#', '');
         // console.log(location.pathname);
         // console.log(hashValue);
         routerMap[hashValue]();
     }
     // router();
     window.addEventListener('DOMContentLoaded', router);
-    window.addEventListener('hashchange',router);
+    window.addEventListener('hashchange', router);
 })();

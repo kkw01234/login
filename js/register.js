@@ -1,109 +1,104 @@
+import { utils } from "./utils.js";
+const user = ['kkw01234'];
 
-const registerForm = () => {
-    const body = document.querySelector("#main");
-    body.innerHTML = (function () {
-        return `
-        <header>회원가입</header>
-    <div id="register-container">
-    <form action="" name="register" method="post" onsubmit="return registerButton.checkRegisterForm()">
-    <div class="input-container">
-        <p>아이디</p>
-        <div class="inputText">
-            <input type="text" name="id">
+export const registerForm = {
+    that : this,
+    makeRegisterForm() {
+        return (function () {
+            return `
+            <header>회원가입</header>
+        <div id="register-container">
+        <form action="" name="register" method="get" id="registerForm">
+        <div class="input-container">
+            <p>아이디</p>
+            <div class="inputText">
+                <input type="text" name="id">
+            </div>
+            <div id="nameError"></div>
         </div>
-        <div id="nameError"></div>
-    </div>
-    <div class="input-container">
-        <p>패스워드</p>
-        <div class="inputText">
-            <input type="password" name="password">
+        <div class="input-container">
+            <p>패스워드</p>
+            <div class="inputText">
+                <input type="password" name="password">
+            </div>
+            <div id="passwordError"></div>
         </div>
-        <div id="passwordError"></div>
-    </div>
-    <div class="input-container">
-        <p>비밀번호 재확인</p>
-        <div class="inputText">
-            <input type="password" name="reconfirmationPassword">
+        <div class="input-container">
+            <p>비밀번호 재확인</p>
+            <div class="inputText">
+                <input type="password" name="reconfirmationPassword">
+            </div>
+            <div id="reconfirmationPasswordError"></div>
         </div>
-        <div id="reconfirmationPasswordError"></div>
-    </div>
-    <div class="input-container">
-        <p>이름</p>
-        <div class="inputText">
-            <input type="text" name="name">
+        <div class="input-container">
+            <p>이름</p>
+            <div class="inputText">
+                <input type="text" name="name">
+            </div>
+            <div id="nameError"></div>
         </div>
-        <div id="nameError"></div>
-    </div>
-    <div class="input-container">
-        <p>생년월일</p>
-        <div class="inputText">
-            <input type="text" name="birthYear" placeholder="년(6자)">
-            <select name="birthMonth">
-                <option value="">월</option>
-            </select>
-            <input type="text" name="birthDate" placeholder="일">
+        <div class="input-container">
+            <p>생년월일</p>
+            <div class="inputText">
+                <input type="text" name="birthYear" placeholder="년(6자)">
+                <select name="birthMonth">
+                    <option value="">월</option>
+                </select>
+                <input type="text" name="birthDate" placeholder="일">
+            </div>
+            <div id="birthError"></div>
         </div>
-        <div id="birthError"></div>
+        <div class="input-container">
+            <p>성별</p>
+            <div class="inputText">
+                <select name="gender">
+                    <option value="">성별</option>
+                    <option value="male">남</option>
+                    <option value="female">여</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-container">
+            <p>이메일</p>
+            <div class="inputText">
+                <input type="email" name="email">
+            </div>
+            <div id="emailError"></div>
+        </div>
+        <div class="input-container">
+            <p>휴대전화</p>
+            <div class="inputText">
+                <input type="text" name="phone">
+            </div>
+            <div id="phoneError"></div>
+        </div>
+        <div class="input-container">
+            <p>관심사</p>
+            <div class="tags-input">
+                <input type="interests" name="interests">
+            </div>
+            <div id="interestsError"></div>
+        </div>
+        <div class="terms-container">
+            <span> 약관에 동의합니다.</span>
+            <input type="checkbox" name="terms" disabled="disabled">
+        </div>
+        <div class="btn-container">
+            <button type="button" class="btn btn-middle" id="initialization-button">초기화</button>
+            <button type="button" class="btn btn-middle" id="register-button">가입하기</input>
+        </div>
+        </form>
     </div>
-    <div class="input-container">
-        <p>성별</p>
-        <div class="inputText">
-            <select name="gender">
-                <option value="">성별</option>
-                <option value="male">남</option>
-                <option value="female">여</option>
-            </select>
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+           
         </div>
     </div>
-    <div class="input-container">
-        <p>이메일</p>
-        <div class="inputText">
-            <input type="email" name="email">
-        </div>
-        <div id="emailError"></div>
-    </div>
-    <div class="input-container">
-        <p>휴대전화</p>
-        <div class="inputText">
-            <input type="text" name="phone">
-        </div>
-        <div id="phoneError"></div>
-    </div>
-    <div class="input-container">
-        <p>관심사</p>
-        <div class="tags-input">
-            <input type="interests" name="interests">
-        </div>
-        <div id="interestsError"></div>
-    </div>
-    <div class="terms-container">
-        <span> 약관에 동의합니다.</span>
-        <input type="checkbox" name="terms" disabled="disabled">
-    </div>
-    <div class="btn-container">
-        <button type="button" class="btn btn-middle" id="initialization-button">초기화</button>
-        <input type="submit" value="가입하기" class="btn btn-middle" id="register-button"></input>
-    </div>
-    </form>
-</div>
-<div id="register-modal" class="modal">
-    <div class="modal-content">
-       
-    </div>
-</div>
-`
-    })();
-    body.appendChild(footerForm.makeFooter());
-    const modal = document.querySelector("#register-modal");
+    `
+        })();
+    },
 
-    const user = ['kkw01234'];
-    const insertSentenceHTML = (errordiv, sentence, color = "black") => {
-        errordiv.innerHTML = sentence;
-        errordiv.style.color = color;
-    }
-
-
-    this.id = {
+    id: {
         init() {
             let idchecking = false;
 
@@ -114,14 +109,14 @@ const registerForm = () => {
                 const sentence = this.checkId(idform.value);
                 if (sentence === "") {
                     idchecking = true;
-                    insertSentenceHTML(errordiv, "사용가능한 아이디입니다.", "green");
+                    utils.insertSentenceHTML(errordiv, "사용가능한 아이디입니다.", "green");
                     return;
                 }
-                insertSentenceHTML(errordiv, sentence, "red");
+                utils.insertSentenceHTML(errordiv, sentence, "red");
             });
             this.clearIdForm = () => {
                 idform.value = "";
-                insertSentenceHTML(errordiv, "");
+                utils.insertSentenceHTML(errordiv, "");
                 idchecking = false;
             }
             this.getId = () => {
@@ -157,9 +152,8 @@ const registerForm = () => {
             });
         },
 
-    }
-
-    this.password = {
+    },
+    password: {
         init() {
             let passwordChecking, reconfirmationPasswordChecking;
             const passwordform = document.querySelector("input[name=password]");
@@ -168,14 +162,14 @@ const registerForm = () => {
             const reconfirmationPasswordError = document.querySelector("#reconfirmationPasswordError");
             passwordform.addEventListener("input", () => {
                 passwordChecking = false;
-                insertSentenceHTML(reconfirmationPasswordError, "");
+                utils.insertSentenceHTML(reconfirmationPasswordError, "");
                 const sentence = this.checkPassword(passwordform.value);
-                insertSentenceHTML(passwordError, sentence == "" ? " 안전한 비밀번호입니다." : sentence, sentence == "" ? "green" : "red");
+                utils.insertSentenceHTML(passwordError, sentence == "" ? " 안전한 비밀번호입니다." : sentence, sentence == "" ? "green" : "red");
                 if (sentence == "") {
                     passwordChecking = true;
-                    insertSentenceHTML(passwordError, "안전한 비밀번호입니다.", "green");
+                    utils.insertSentenceHTML(passwordError, "안전한 비밀번호입니다.", "green");
                 } else {
-                    insertSentenceHTML(passwordError, sentence, "red");
+                    utils.insertSentenceHTML(passwordError, sentence, "red");
                 }
             });
             reconfirmationPasswordform.addEventListener("input", () => {
@@ -183,15 +177,15 @@ const registerForm = () => {
                 const result = this.checkReconfirmationandPassword(passwordform.value, reconfirmationPasswordform.value)
                 if (result) {
                     reconfirmationPasswordChecking = true;
-                    insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치합니다.", "green");
+                    utils.insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치합니다.", "green");
                 } else
-                    insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치하지 않습니다.", "red");
+                utils.insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치하지 않습니다.", "red");
             });
             this.clearPasswordForm = () => {
                 passwordform.value = "";
                 reconfirmationPasswordform.value = "";
-                insertSentenceHTML(passwordError, "");
-                insertSentenceHTML(reconfirmationPasswordError, "");
+                utils.insertSentenceHTML(passwordError, "");
+                utils.insertSentenceHTML(reconfirmationPasswordError, "");
                 passwordChecking = false;
             };
             this.getPassword = () => {
@@ -231,8 +225,8 @@ const registerForm = () => {
         },
 
 
-    }
-    this.registerName = {
+    },
+    registerName: {
         init() {
             const nameForm = document.querySelector('input[name=name]');
             this.clearNameForm = () => {
@@ -245,9 +239,8 @@ const registerForm = () => {
                 return nameForm.value;
             }
         }
-    }
-   
-    this.birth = {
+    },
+    birth: {
         init() {
             let yearChecking, monthChecking, dateChecking;
             const birthYearform = document.querySelector('input[name=birthYear]');
@@ -260,16 +253,16 @@ const registerForm = () => {
             birthYearform.addEventListener("input", () => {
                 yearChecking = false;
                 const sentence = this.checkBirthYear(birthYearform.value);
-                insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
+                utils.insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
                 if (sentence == "") {
                     yearChecking = true;
                     const monthSentence = this.checkBirthYear(birthYearform.value);
                     const dateSentence = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
                     if (!(monthSentence === '')) {
-                        insertSentenceHTML(errordiv, monthChecking, "red");
+                        utils.insertSentenceHTML(errordiv, monthChecking, "red");
                         monthChecking = false;
                     } else if (!(dateSentence === '')) {
-                        insertSentenceHTML(errordiv, dateSentence, "red");
+                        utils.insertSentenceHTML(errordiv, dateSentence, "red");
                         dateChecking = false;
                     }
                 }
@@ -279,7 +272,7 @@ const registerForm = () => {
                 monthChecking = false;
                 const sentence = this.checkBirthMonth(birthMonthform.value);
                 console.log(birthMonthform.value);
-                insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
+                utils.insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
                 if (sentence === "") {
                     monthChecking = true;
                     const yearSentence = this.checkBirthYear(birthYearform.value);
@@ -287,10 +280,10 @@ const registerForm = () => {
                     console.log(dateSentence);
                     if (!(yearSentence === '')) {
                         yearChecking = false;
-                        insertSentenceHTML(errordiv, yearSentence, "red");
+                        utils.insertSentenceHTML(errordiv, yearSentence, "red");
                     } else if (!(dateSentence === '')) {
                         dateChecking = false;
-                        insertSentenceHTML(errordiv, dateSentence, "red");
+                        utils.insertSentenceHTML(errordiv, dateSentence, "red");
                     }
 
                 }
@@ -298,7 +291,7 @@ const registerForm = () => {
             birthDateform.addEventListener("input", () => {
                 dateChecking = false;
                 const sentence = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
-                insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
+                utils.insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
                 if (sentence == "") {
                     dateChecking = true;
                 }
@@ -307,7 +300,7 @@ const registerForm = () => {
                 birthYearform.value = "";
                 birthMonthform.value = "";
                 birthDateform.value = "";
-                insertSentenceHTML(errordiv, "");
+                utils.insertSentenceHTML(errordiv, "");
                 yearChecking = false;
                 monthChecking = false;
                 dateChecking = false;
@@ -390,8 +383,8 @@ const registerForm = () => {
             }
         }
 
-    }
-    this.gender = {
+    },
+    gender: {
         init() {
             const genderform = document.querySelector("select[name=gender]");
             this.clearGenderform = () => {
@@ -404,8 +397,8 @@ const registerForm = () => {
                 return false;
             }
         }
-    }
-    this.email = {
+    },
+    email: {
         init() {
             let emailChecking = false;
             const emailform = document.querySelector("input[name=email]");
@@ -414,14 +407,14 @@ const registerForm = () => {
                 emailChecking = false;
 
                 const sentence = this.checkEmail(emailform.value);
-                insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
+                utils.insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
                 if (sentence === "") {
                     emailChecking = true;
                 }
             });
             this.clearEmailForm = () => {
                 emailform.value = "";
-                insertSentenceHTML(errordiv, "");
+                utils.insertSentenceHTML(errordiv, "");
                 emailChecking = false;
             };
             this.getEmail = () => {
@@ -436,8 +429,8 @@ const registerForm = () => {
             const result = regExp.test(email);
             return result ? "" : "이메일 주소를 확인하세요";
         }
-    }
-    this.phone = {
+    },
+    phone: {
 
         init() {
             let phoneChecking = false;
@@ -446,14 +439,14 @@ const registerForm = () => {
             phoneform.addEventListener("input", () => {
                 phoneChecking = false;
                 const sentence = this.checkPhone(phoneform.value);
-                insertSentenceHTML(errordiv, sentence, sentence === "" ? "black" : "red");
+                utils.insertSentenceHTML(errordiv, sentence, sentence === "" ? "black" : "red");
                 if (sentence === "") {
                     phoneChecking = true;
                 }
             });
             this.clearPhoneForm = () => {
                 phoneform.value = "";
-                insertSentenceHTML(errordiv, "");
+                utils.insertSentenceHTML(errordiv, "");
                 phoneChecking = false;
             };
             this.getPhone = () => {
@@ -474,8 +467,8 @@ const registerForm = () => {
             console.log(result);
             return result ? "" : "형식에 맞지 않는 번호입니다.";
         }
-    }
-    this.interests = {
+    },
+    interests: {
         init() {
             this.interestList = [];
             let checking = false;
@@ -487,9 +480,9 @@ const registerForm = () => {
                     this.interestList.pop();
                     console.log(this.interestList);
                     if (!this.checkInterests()) {
-                        insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
+                        utils.insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
                     } else
-                        insertSentenceHTML(document.querySelector('#interestsError'), "");
+                        utils.insertSentenceHTML(document.querySelector('#interestsError'), "");
 
                 }
             });
@@ -514,9 +507,9 @@ const registerForm = () => {
                     interestForm.value = "";
                     checking = false;
                     if (!this.checkInterests()) {
-                        insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
+                        utils.insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
                     } else
-                        insertSentenceHTML(document.querySelector('#interestsError'), "");
+                    utils.insertSentenceHTML(document.querySelector('#interestsError'), "");
                 }
             });
         },
@@ -557,9 +550,11 @@ const registerForm = () => {
             }
         }
     }
-    this.terms = {
+    ,
+    terms: {
         init() {
             const openingmodal = document.querySelector(".terms-container");
+            const modal = document.querySelector(".modal");
             openingmodal.addEventListener("click", () => { //모달 띄우기
                 const modalContent = document.querySelectorAll(".modal-content")[0];
                 modalContent.className = "modal-content modal-large";
@@ -651,20 +646,21 @@ const registerForm = () => {
         },
         clickButton() {
             const termcheckbox = document.querySelector("input[name=terms]");
+            const modal = document.querySelector(".modal");
             termcheckbox.checked = true;
             modal.style.display = "none";
 
 
         },
     }
-
-    this.initializationButton = {
+    , initializationButton: {
         init() {
             const initialization = document.querySelector("#initialization-button");
 
             initialization.addEventListener("click", this.initializationListener);
         },
-        initializationListener(){
+        initializationListener() {
+            const modal = document.querySelector(".modal");
             const modalContent = document.querySelector(".modal-content");
             const p = document.createElement('p');
             p.textContent = "정말로 삭제하시겠습니까?";
@@ -676,8 +672,8 @@ const registerForm = () => {
             const cancelButton = document.createElement('button');
             deleteButton.className = "btn btn-small";
             deleteButton.textContent = "삭제";
-            deleteButton.addEventListener("click", initializationButton.deleteAll);
-           
+            deleteButton.addEventListener("click", registerForm.initializationButton.deleteAll);
+
             cancelButton.className = "btn btn-small";
             cancelButton.textContent = "취소";
             cancelButton.addEventListener("click", () => {
@@ -693,45 +689,35 @@ const registerForm = () => {
             return false;
         },
         deleteAll() {
-            console.log("add");
-            id.clearIdForm();
-            password.clearPasswordForm();
-            registerName.clearNameForm();
-            birth.clearBirthForm();
-            gender.clearGenderform();
-            email.clearEmailForm();
-            phone.clearPhoneForm();
-            interests.clearInterests();
+            const modal = document.querySelector(".modal");
+            registerForm.id.clearIdForm();
+            registerForm.password.clearPasswordForm();
+            registerForm.registerName.clearNameForm();
+            registerForm.birth.clearBirthForm();
+            registerForm.gender.clearGenderform();
+            registerForm.email.clearEmailForm();
+            registerForm.phone.clearPhoneForm();
+            registerForm.interests.clearInterests();
             document.querySelector("input[name=terms]").checked = false;
             modal.style.display = 'none';
         }
-    }
-    this.registerButton = {
+    },
+    registerButton: {
         init() {
             const register = document.querySelector('#register-button');
-            // register.addEventListener("click", this.checkRegisterForm);
+            register.addEventListener("click", this.checkRegisterForm);
         },
-        makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue) {
-            return JSON.stringify({
-                id: idValue,
-                password: passwordValue,
-                name: nameValue,
-                birth: birthValue,
-                gender: genderValue,
-                email: emailValue,
-                phone: phoneValue,
-                interests: interestsValue,
-            });
-        },
+    
         checkRegisterForm() {
-            const idValue = id.getId();
-            const passwordValue = password.getPassword();
-            const nameValue = registerName.getName();
-            const birthValue = birth.getBirth();
-            const genderValue = gender.getGender();
-            const emailValue = email.getEmail();
-            const phoneValue = phone.getPhone();
-            const interestsValue = interests.getInterests();
+            const modal = document.querySelector(".modal");
+            const idValue = registerForm.id.getId();
+            const passwordValue = registerForm.password.getPassword();
+            const nameValue = registerForm.registerName.getName();
+            const birthValue = registerForm.birth.getBirth();
+            const genderValue = registerForm.gender.getGender();
+            const emailValue = registerForm.email.getEmail();
+            const phoneValue = registerForm.phone.getPhone();
+            const interestsValue = registerForm.interests.getInterests();
             const checkTerm = document.querySelector("input[name=terms]").checked;
             const registerUser = {
                 아이디: idValue,
@@ -749,7 +735,7 @@ const registerForm = () => {
                 if (!registerUser[key]) {
                     const modalContent = document.querySelector(".modal-content");
                     const content = document.createElement('p');
-                    const btnContainer= document.createElement('div');
+                    const btnContainer = document.createElement('div');
                     const button = document.createElement("button");
                     content.textContent = `${key}를(을) 확인해 주세요`;
                     btnContainer.className = "btn-container";
@@ -771,21 +757,36 @@ const registerForm = () => {
             }
 
 
-
-            const result = this.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
-            console.log(result);
+            const result = registerForm.registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
+            document.querySelector("#registerForm").submit();
             return true;
+        },
+        makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue) {
+            return JSON.stringify({
+                id: idValue,
+                password: passwordValue,
+                name: nameValue,
+                birth: birthValue,
+                gender: genderValue,
+                email: emailValue,
+                phone: phoneValue,
+                interests: interestsValue,
+            });
         }
+    },
+    init() {
+        this.modal = document.querySelector(".modal");
+        this.id.init();
+        this.password.init();
+        this.registerName.init();
+        this.birth.init();
+        this.gender.init();
+        this.email.init();
+        this.phone.init();
+        this.interests.init();
+        this.terms.init();
+        this.registerButton.init();
+        this.initializationButton.init();
     }
-    id.init();
-    password.init();
-    registerName.init();
-    birth.init();
-    gender.init();
-    email.init();
-    phone.init();
-    interests.init();
-    terms.init();
-    registerButton.init();
-    initializationButton.init();
+
 };
