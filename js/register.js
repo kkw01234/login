@@ -1,8 +1,8 @@
-import { utils } from "./utils.js";
-const user = ['kkw01234'];
+import { insertSentenceHTML,user } from "./utils.js";
 
-export const registerForm = {
-    that : this,
+// const user = ['kkw01234'];
+
+export const register = {
     makeRegisterForm() {
         return (function () {
             return `
@@ -109,14 +109,14 @@ export const registerForm = {
                 const sentence = this.checkId(idform.value);
                 if (sentence === "") {
                     idchecking = true;
-                    utils.insertSentenceHTML(errordiv, "사용가능한 아이디입니다.", "green");
+                    insertSentenceHTML(errordiv, "사용가능한 아이디입니다.", "green");
                     return;
                 }
-                utils.insertSentenceHTML(errordiv, sentence, "red");
+                insertSentenceHTML(errordiv, sentence, "red");
             });
             this.clearIdForm = () => {
                 idform.value = "";
-                utils.insertSentenceHTML(errordiv, "");
+                insertSentenceHTML(errordiv, "");
                 idchecking = false;
             }
             this.getId = () => {
@@ -162,14 +162,14 @@ export const registerForm = {
             const reconfirmationPasswordError = document.querySelector("#reconfirmationPasswordError");
             passwordform.addEventListener("input", () => {
                 passwordChecking = false;
-                utils.insertSentenceHTML(reconfirmationPasswordError, "");
+                insertSentenceHTML(reconfirmationPasswordError, "");
                 const sentence = this.checkPassword(passwordform.value);
-                utils.insertSentenceHTML(passwordError, sentence == "" ? " 안전한 비밀번호입니다." : sentence, sentence == "" ? "green" : "red");
+                insertSentenceHTML(passwordError, sentence == "" ? " 안전한 비밀번호입니다." : sentence, sentence == "" ? "green" : "red");
                 if (sentence == "") {
                     passwordChecking = true;
-                    utils.insertSentenceHTML(passwordError, "안전한 비밀번호입니다.", "green");
+                    insertSentenceHTML(passwordError, "안전한 비밀번호입니다.", "green");
                 } else {
-                    utils.insertSentenceHTML(passwordError, sentence, "red");
+                    insertSentenceHTML(passwordError, sentence, "red");
                 }
             });
             reconfirmationPasswordform.addEventListener("input", () => {
@@ -177,15 +177,15 @@ export const registerForm = {
                 const result = this.checkReconfirmationandPassword(passwordform.value, reconfirmationPasswordform.value)
                 if (result) {
                     reconfirmationPasswordChecking = true;
-                    utils.insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치합니다.", "green");
+                    insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치합니다.", "green");
                 } else
-                utils.insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치하지 않습니다.", "red");
+                insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치하지 않습니다.", "red");
             });
             this.clearPasswordForm = () => {
                 passwordform.value = "";
                 reconfirmationPasswordform.value = "";
-                utils.insertSentenceHTML(passwordError, "");
-                utils.insertSentenceHTML(reconfirmationPasswordError, "");
+                insertSentenceHTML(passwordError, "");
+                insertSentenceHTML(reconfirmationPasswordError, "");
                 passwordChecking = false;
             };
             this.getPassword = () => {
@@ -253,16 +253,16 @@ export const registerForm = {
             birthYearform.addEventListener("input", () => {
                 yearChecking = false;
                 const sentence = this.checkBirthYear(birthYearform.value);
-                utils.insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
+                insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
                 if (sentence == "") {
                     yearChecking = true;
                     const monthSentence = this.checkBirthYear(birthYearform.value);
                     const dateSentence = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
                     if (!(monthSentence === '')) {
-                        utils.insertSentenceHTML(errordiv, monthChecking, "red");
+                        insertSentenceHTML(errordiv, monthChecking, "red");
                         monthChecking = false;
                     } else if (!(dateSentence === '')) {
-                        utils.insertSentenceHTML(errordiv, dateSentence, "red");
+                        insertSentenceHTML(errordiv, dateSentence, "red");
                         dateChecking = false;
                     }
                 }
@@ -272,7 +272,7 @@ export const registerForm = {
                 monthChecking = false;
                 const sentence = this.checkBirthMonth(birthMonthform.value);
                 console.log(birthMonthform.value);
-                utils.insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
+                insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
                 if (sentence === "") {
                     monthChecking = true;
                     const yearSentence = this.checkBirthYear(birthYearform.value);
@@ -280,10 +280,10 @@ export const registerForm = {
                     console.log(dateSentence);
                     if (!(yearSentence === '')) {
                         yearChecking = false;
-                        utils.insertSentenceHTML(errordiv, yearSentence, "red");
+                        insertSentenceHTML(errordiv, yearSentence, "red");
                     } else if (!(dateSentence === '')) {
                         dateChecking = false;
-                        utils.insertSentenceHTML(errordiv, dateSentence, "red");
+                        insertSentenceHTML(errordiv, dateSentence, "red");
                     }
 
                 }
@@ -291,7 +291,7 @@ export const registerForm = {
             birthDateform.addEventListener("input", () => {
                 dateChecking = false;
                 const sentence = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
-                utils.insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
+                insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
                 if (sentence == "") {
                     dateChecking = true;
                 }
@@ -300,7 +300,7 @@ export const registerForm = {
                 birthYearform.value = "";
                 birthMonthform.value = "";
                 birthDateform.value = "";
-                utils.insertSentenceHTML(errordiv, "");
+                insertSentenceHTML(errordiv, "");
                 yearChecking = false;
                 monthChecking = false;
                 dateChecking = false;
@@ -407,14 +407,14 @@ export const registerForm = {
                 emailChecking = false;
 
                 const sentence = this.checkEmail(emailform.value);
-                utils.insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
+                insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
                 if (sentence === "") {
                     emailChecking = true;
                 }
             });
             this.clearEmailForm = () => {
                 emailform.value = "";
-                utils.insertSentenceHTML(errordiv, "");
+                insertSentenceHTML(errordiv, "");
                 emailChecking = false;
             };
             this.getEmail = () => {
@@ -439,14 +439,14 @@ export const registerForm = {
             phoneform.addEventListener("input", () => {
                 phoneChecking = false;
                 const sentence = this.checkPhone(phoneform.value);
-                utils.insertSentenceHTML(errordiv, sentence, sentence === "" ? "black" : "red");
+                insertSentenceHTML(errordiv, sentence, sentence === "" ? "black" : "red");
                 if (sentence === "") {
                     phoneChecking = true;
                 }
             });
             this.clearPhoneForm = () => {
                 phoneform.value = "";
-                utils.insertSentenceHTML(errordiv, "");
+                insertSentenceHTML(errordiv, "");
                 phoneChecking = false;
             };
             this.getPhone = () => {
@@ -480,9 +480,9 @@ export const registerForm = {
                     this.interestList.pop();
                     console.log(this.interestList);
                     if (!this.checkInterests()) {
-                        utils.insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
+                        insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
                     } else
-                        utils.insertSentenceHTML(document.querySelector('#interestsError'), "");
+                        insertSentenceHTML(document.querySelector('#interestsError'), "");
 
                 }
             });
@@ -507,9 +507,9 @@ export const registerForm = {
                     interestForm.value = "";
                     checking = false;
                     if (!this.checkInterests()) {
-                        utils.insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
+                        insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
                     } else
-                    utils.insertSentenceHTML(document.querySelector('#interestsError'), "");
+                    insertSentenceHTML(document.querySelector('#interestsError'), "");
                 }
             });
         },

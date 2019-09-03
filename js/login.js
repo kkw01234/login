@@ -1,10 +1,6 @@
-// let page = "login";
-const users = {
-    id: "kkw01234",
-    password: "aaaa"
-};
+import {user} from "./utils.js"
 
-const loginForm = {
+export const login = {
     makeLoginPage() {
         const loginContainer = document.createElement("div");
         const logoContainer = document.createElement("div");
