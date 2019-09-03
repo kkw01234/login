@@ -192,30 +192,26 @@ const password = {
         const reconfirmationPasswordError = document.querySelector("#reconfirmationPasswordError");
         passwordform.addEventListener("input", () => {
             passwordChecking = false;
-            insertSentenceHTML(reconfirmationPasswordError, "");
-            const sentence = this.checkPassword(passwordform.value);
-            insertSentenceHTML(passwordError, sentence == "" ? " 안전한 비밀번호입니다." : sentence, sentence == "" ? "green" : "red");
-            if (sentence == "") {
+            const enumResult = this.checkPassword(passwordform.value);
+            insertSentenceHTML(passwordError, enumResult.content, enumResult.color);
+            insertSentenceHTML(reconfirmationPasswordError, registerEnum.DEFAULT.content);
+            if (enumResult == registerEnum.SAFETY_PASSWORD) {
                 passwordChecking = true;
-                insertSentenceHTML(passwordError, "안전한 비밀번호입니다.", "green");
-            } else {
-                insertSentenceHTML(passwordError, sentence, "red");
-            }
+            } 
         });
         reconfirmationPasswordform.addEventListener("input", () => {
             reconfirmationPasswordChecking = false;
-            const result = this.checkReconfirmationandPassword(passwordform.value, reconfirmationPasswordform.value)
-            if (result) {
+            const enumResult = this.checkReconfirmationandPassword(passwordform.value, reconfirmationPasswordform.value);
+            insertSentenceHTML(reconfirmationPasswordError,enumResult.content, enumResult.color);
+            if (enumResult === registerEnum.MATCHING_PASSWORD) {
                 reconfirmationPasswordChecking = true;
-                insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치합니다.", "green");
-            } else
-            insertSentenceHTML(reconfirmationPasswordError, "비밀번호가 일치하지 않습니다.", "red");
+            }
         });
         this.clearPasswordForm = () => {
             passwordform.value = "";
             reconfirmationPasswordform.value = "";
-            insertSentenceHTML(passwordError, "");
-            insertSentenceHTML(reconfirmationPasswordError, "");
+            insertSentenceHTML(passwordError, registerEnum.DEFAULT.content);
+            insertSentenceHTML(reconfirmationPasswordError, registerEnum.DEFAULT.content);
             passwordChecking = false;
         };
         this.getPassword = () => {
@@ -227,24 +223,24 @@ const password = {
     },
     checkPassword(value) {
         if (value.length < 8) {
-            return `8자 이상 16자 이하로 입력해주세요.`;
+            return registerEnum.IMPROPER_LENGTH_PASSWORD;
         }
         let regExp = /[A-Z]/;
         let result = regExp.test(value);
         if (!result) {
-            return `영문 대문자를 최소 1자 이상 포함해주세요. `;
+            return registerEnum.NOT_FIND_CAPITAL_LETTER;
         };
         regExp = /[0-9]/;
         result = regExp.test(value);
         if (!result) {
-            return `숫자를 최소 1자 이상 포함해주세요.`;
+            return registerEnum.NOT_FIND_NUMBER;
         }
         regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/;
         result = regExp.test(value);
         if (!result) {
-            return `특수문자를 최소 1자 이상 포함해주세요.`;
+            return registerEnum.NOT_FIND_SPECIAL_LETTER;
         }
-        return ``;
+        return registerEnum.SAFETY_PASSWORD;
     },
     checkReconfirmationandPassword(password, reconfirmationPassword) {
 
