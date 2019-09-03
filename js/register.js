@@ -13,15 +13,14 @@ const registerEnum = {
     INVALID_BIRTH_YEAR:{content:`태어난 년도 4자리를 정확하게 입력하세요`, color: `red`},
     UNABLE_REGISTER:{content:`15세 이상 99세 이하일 경우만 회원가입 하실 수 있습니다.`,color:`red`},
     INVALID_BIRTH_MONTH:{content:`월을 선택해 주세요`, color:"red"},
-    INVALID_BIRTH_DATE:{content:`${this.month}는 ${this.lastdate}까지 있습니다.`, color:"red",setDate(month, lastdate){
+    INVALID_BIRTH_DATE:{content:`정확한 일자를 입력해주세요`, color:"red",setDate(month, lastdate){
         this.month = month;
         this.lastdate = lastdate;
         return this;
     }},
     INVALID_PHONE_NUMBER:{content:"형식에 맞지않는 번호입니다.",color:`red`},
     OVER_THREE_TAGS:{content:"관심사를 3개 이상 입력해 주세요", color:`red`},
-    CHECK_INPUT_USER:{content:`${this.key}를 확인해주세요`,color:`red`,setKey(key){this.key = key;return this;}}
-
+    // CHECK_INPUT_USER:{content:`${this.key}를 확인해주세요`,color:`red`,setKey(key){this.key = key;return this;}}
 }
 
 export const register = {
