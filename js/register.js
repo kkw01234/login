@@ -246,9 +246,9 @@ const password = {
     checkReconfirmationandPassword(password, reconfirmationPassword) {
 
         if (password === reconfirmationPassword) {
-            return true;
+            return registerEnum.MATCHING_PASSWORD;
         }
-        return false;
+        return registerEnum.NOT_MATCHING_PASSWORD;
     },
 
 
