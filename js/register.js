@@ -3,9 +3,8 @@ import { insertSentenceHTML,user } from "./utils.js";
 // const user = ['kkw01234'];
 
 export const register = {
-    makeRegisterForm() {
-        return (function () {
-            return `
+    render() {
+        return  `
             <header>회원가입</header>
         <div id="register-container">
         <form action="" name="register" method="get" id="registerForm">
@@ -95,7 +94,6 @@ export const register = {
         </div>
     </div>
     `
-        })();
     },
 
     id: {

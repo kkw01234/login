@@ -14,7 +14,7 @@ import {footer} from "./footer.js";
             body.insertAdjacentHTML("beforeend",footer.render());
         },
         'register': () => {
-            body.innerHTML = register.makeRegisterForm();
+            body.innerHTML = register.render();
             register.init();
             body.appendChild(footer.render());
         }
