@@ -1,5 +1,6 @@
 import {register} from "./register.js";
-import {login} from "./login.js"
+import {login} from "./login.js";
+import {footer} from "./footer.js";
 (function () {
     const body = document.querySelector('body');
     const routerMap = {
@@ -7,9 +8,10 @@ import {login} from "./login.js"
             body.innerHTML = mainPage();
         },
         'loginpage': () => {
+            
             body.innerHTML = "";
             body.appendChild(login.makeLoginPage());
-            body.appendChild(footer.render());
+            body.insertAdjacentHTML("beforeend",footer.render());
         },
         'register': () => {
             body.innerHTML = register.makeRegisterForm();
