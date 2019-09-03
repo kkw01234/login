@@ -1,11 +1,12 @@
 import {register} from "./register.js";
 import {login} from "./login.js";
 import {footer} from "./footer.js";
+import {main} from "./main.js";
 (function () {
     const body = document.querySelector('body');
     const routerMap = {
         '': () => {
-            body.innerHTML = mainPage();
+            body.innerHTML = main();
         },
         'loginpage': () => {
             
@@ -16,7 +17,7 @@ import {footer} from "./footer.js";
         'register': () => {
             body.innerHTML = register.render();
             register.init();
-            body.appendChild(footer.render());
+            body.insertAdjacentHTML("beforeend",footer.render());
         }
     }
     const router = () => {
