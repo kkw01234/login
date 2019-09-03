@@ -16,6 +16,7 @@ const registerEnum = {
     UNABLE_REGISTER:{content:`15세 이상 99세 이하일 경우만 회원가입 하실 수 있습니다.`,color:`red`},
     INVALID_BIRTH_MONTH:{content:`월을 선택해 주세요`, color:"red"},
     INVALID_BIRTH_DATE:{content:`정확한 일자를 입력해주세요`, color:"red"},
+    INVALID_EMAIL:{content:`이메일 주소를 확인하세요`, color:"red"},
     INVALID_PHONE_NUMBER:{content:"형식에 맞지않는 번호입니다.",color:`red`},
     OVER_THREE_TAGS:{content:"관심사를 3개 이상 입력해 주세요", color:`red`},
     // CHECK_INPUT_USER:{content:`${this.key}를 확인해주세요`,color:`red`,setKey(key){this.key = key;return this;}}
@@ -432,9 +433,9 @@ const email = {
         emailform.addEventListener("input", () => {
             emailChecking = false;
 
-            const sentence = this.checkEmail(emailform.value);
-            insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
-            if (sentence === "") {
+            const enumResult = this.checkEmail(emailform.value);
+            insertSentenceHTML(errordiv, enumResult.content, enumResult.color);
+            if (enumResult === register.DEFAULT) {
                 emailChecking = true;
             }
         });
@@ -451,9 +452,9 @@ const email = {
         };
     },
     checkEmail(email) {
-        const regExp = /[^@]+@[^@]+.[^@]+/;
+        const regExp = /[^@]+@[^@]+(\.)[^@]+/;
         const result = regExp.test(email);
-        return result ? "" : "이메일 주소를 확인하세요";
+        return result ? registerEnum.DEFAULT : registerEnum.INVALID_EMAIL;
     }
 }
 const phone = {
