@@ -1,7 +1,9 @@
 import { insertSentenceHTML,user } from "./utils.js";
 
 const registerEnum = {
+    DEFAULT : {content: "", color:"black"},
     INVALID_ID :{content :`5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.`,color:"red"},
+    VALID_ID : {content:`사용 가능한 아이디입니다.`, color:"green"},
     EXIST_USER : {content : "이미 사용중인 아이디 입니다.", color : "red"},
     SAFETY_PASSWORD :{content : "안전한 비밀번호 입니다.", color :"green"},
     IMPROPER_LENGTH_PASSWORD:{content :"8자 이상 16자 이하로 입력해주세요",color:"red"},
@@ -138,13 +140,11 @@ const id = {
         const errordiv = document.querySelector("#nameError");
         idform.addEventListener("input", () => {
             idchecking = false;
-            const sentence = this.checkId(idform.value);
-            if (sentence === "") {
+            const enumResult = this.checkId(idform.value);
+            insertSentenceHTML(errordiv, enumResult.content, enumResult.color);
+            if (enumResult === registerEnum.VALID_ID) {
                 idchecking = true;
-                insertSentenceHTML(errordiv, "사용가능한 아이디입니다.", "green");
-                return;
             }
-            insertSentenceHTML(errordiv, sentence, "red");
         });
         this.clearIdForm = () => {
             idform.value = "";
@@ -160,12 +160,12 @@ const id = {
     checkId(value) {
 
         if (!this.checkAvailableId(value)) {
-            return ` 5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.`;
+            return registerEnum.INVALID_ID;
         }
         if (!this.findUser(value)) {
-            return `이미사용중인 아이디 입니다.`;
+            return registerEnum.EXIST_USER;
         }
-        return "";
+        return registerEnum.VALID_ID;
 
     },
     checkAvailableId(id) {
