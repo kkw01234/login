@@ -181,7 +181,15 @@ const id = {
         } else return false;
     },
     findUser(id) {
-        return user.id !== id;
+        fetch(`/registerpage/checkid?id=${id}`,{
+            method : `get`,
+            // body : JSON.stringify({id:id}),
+            headers:new Headers()
+        }).then((res)=>{
+            console.log(res);
+        });
+        
+        //return user.id !== id;
     },
 
 }
