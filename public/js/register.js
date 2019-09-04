@@ -554,7 +554,7 @@ const interests = {
         const closeButton = document.createElement("img");
         closeButton.style.width = "1em";
         closeButton.style.height = "1em";
-        closeButton.setAttribute('src', './img/close.svg');
+        closeButton.setAttribute('src', './images/close.svg');
         closeButton.addEventListener("click", () => {
             const interestTag = document.querySelector(".tags-input");
             interestTag.removeChild(span);
@@ -619,7 +619,7 @@ const terms = {
         const btnContainer = document.createElement('div');
         const button = document.createElement('button');
         closeDiv.className = "close";
-        img.src = "./img/close.svg";
+        img.src = "./images/close.svg";
         img.style.width = "20px";
         img.style.height = "20px";
         closeDiv.appendChild(img);
@@ -739,14 +739,14 @@ const registerButton = {
 
     checkRegisterForm() {
         const modal = document.querySelector(".modal");
-        const idValue = registerForm.id.getId();
-        const passwordValue = registerForm.password.getPassword();
-        const nameValue = registerForm.registerName.getName();
-        const birthValue = registerForm.birth.getBirth();
-        const genderValue = registerForm.gender.getGender();
-        const emailValue = registerForm.email.getEmail();
-        const phoneValue = registerForm.phone.getPhone();
-        const interestsValue = registerForm.interests.getInterests();
+        const idValue = id.getId();
+        const passwordValue = password.getPassword();
+        const nameValue = registerName.getName();
+        const birthValue = birth.getBirth();
+        const genderValue = gender.getGender();
+        const emailValue = email.getEmail();
+        const phoneValue = phone.getPhone();
+        const interestsValue = interests.getInterests();
         const checkTerm = document.querySelector("input[name=terms]").checked;
         const registerUser = {
             아이디: idValue,
