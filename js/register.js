@@ -95,6 +95,7 @@ export const register = {
             <p>관심사</p>
             <div class="tags-input">
                 <input type="interests" name="interests">
+                <input type="hidden" name="interesradf" value="[]">
             </div>
             <div id="interestsError"></div>
         </div>
