@@ -7,7 +7,7 @@ html
     link(rel='stylesheet', href='./stylesheets/modal.css')
     link(rel='stylesheet', href='./stylesheets/loginpage.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+  body  
     block content
     script(type='module', src='./js/utils.js')
     script(type='module', src='./js/footer.js')
@@ -17,5 +17,11 @@ html
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
     script(type='module', src='./js/login.js')
     script(type='module', src='/js/render.js')
+    script(type="module").
+      import {router} from "./js/render.js";
+      router.render(`#{address}`);
+
+    
+  
 
 
