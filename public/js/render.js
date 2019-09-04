@@ -12,7 +12,7 @@ const routerMap = {
         this.body.appendChild(login.makeLoginPage());
         this.body.insertAdjacentHTML("beforeend", footer.render());
     },
-    'register':function(){
+    'registerpage':function(){
         this.body.innerHTML = register.render();
         register.init();
         this.body.insertAdjacentHTML("beforeend", footer.render());
