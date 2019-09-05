@@ -1,4 +1,7 @@
-
-export const main = ()=>{
-    return `<nav id="mainpage"><a href="/loginpage">LoginPage</a><a href="/registerpage">회원가입</a></nav>`;
+import {header} from "./header.js";
+import {footer} from "./footer.js";
+export const main = (status)=>{
+    return `${header.render(status)}
+    <div> This is main Page</div>
+    ${footer.render()}`;
 }
