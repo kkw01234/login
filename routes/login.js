@@ -11,11 +11,13 @@ router.post('/login',async function(req,res,next){
   const id = req.body.loginid;
   const password = req.body.loginpassword;
   const result = userRepository.checkUser(id, password);
-  if(await result){
+  if(await result.length > 0){
+
     res.redirect("/");
     // res.render("index",{title: "메인페이지", address:""});
   }else 
     res.send({result : "error"});
+    res.redirect("/loginpage");
 });
 
 module.exports = router;

@@ -18,6 +18,7 @@ router.post('/checkid',async function(req,res,next){
 });
 router.post('/register',async function(req,res,next){
     const result = userRepository.insertUser(req.body);
+    
     if(await result){
       res.redirect("/");
       // res.render("index",{title: "메인페이지", address:""});
