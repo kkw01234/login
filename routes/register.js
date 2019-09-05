@@ -16,8 +16,8 @@ router.post('/checkid',async function(req,res,next){
     res.send({result: result});
 });
 router.post('/register',function(req,res,next){
-  const name = req.params;
-  console.log(params);
+  const name= req.body;
+  console.log(name);
 });
 
 module.exports = router;

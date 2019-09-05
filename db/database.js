@@ -13,6 +13,9 @@ const query = {
     )`},
      checkId(id){
         return `SELECT user_id FROM user WHERE user_id = ?`;
+     },
+     regtsterUser(){
+         return `INSERT INTO user VALUES(?,?,?,?,?,?,?,?)`;
      }    
 }
 const table = {

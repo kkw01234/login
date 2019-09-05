@@ -27,7 +27,7 @@ export const register = {
         return `
             <header>회원가입</header>
         <div id="register-container">
-        <form action="" name="register" method="get" id="registerForm">
+        <form action="/register" name="register" method="post" id="registerForm">
         <div class="input-container">
             <p>아이디</p>
             <div class="inputText">
@@ -94,8 +94,8 @@ export const register = {
         <div class="input-container">
             <p>관심사</p>
             <div class="tags-input">
-                <input type="interests" name="interests">
-                <input type="hidden" name="interesradf" value="[]">
+                <input type="interests" name="interestsform">
+                <input type="hidden" name="interests" value="">
             </div>
             <div id="interestsError"></div>
         </div>
@@ -140,9 +140,9 @@ const id = {
 
         const idform = document.querySelector("input[name=id]");
         const errordiv = document.querySelector("#nameError");
-        idform.addEventListener("input", () => {
+        idform.addEventListener("focusout", async () => {
             idchecking = false;
-            const enumResult = this.checkId(idform.value);
+            const enumResult = await this.checkId(idform.value);
             insertSentenceHTML(errordiv, enumResult.content, enumResult.color);
             if (enumResult === registerEnum.VALID_ID) {
                 idchecking = true;
@@ -159,12 +159,13 @@ const id = {
             return false;
         }
     },
-    checkId(value) {
+    async checkId(value) {
 
         if (!this.checkAvailableId(value)) {
             return registerEnum.INVALID_ID;
         }
-        if (this.findUser(value)) {
+        
+        if (await this.findUser(value)) {
             return registerEnum.EXIST_USER;
         }
         return registerEnum.VALID_ID;
@@ -519,7 +520,7 @@ const interests = {
         this.interestList = [];
         let checking = false;
         const interestTag = document.querySelector(".tags-input");
-        const interestForm = document.querySelector("input[name=interests]");
+        const interestForm = document.querySelector("input[name=interestsform]");
         interestForm.addEventListener('keydown', (e) => {
             if (!checking && e.keyCode == 8 && interestTag.children.length > 1) {
                 interestTag.removeChild(interestTag.children[interestTag.children.length - 2]);
@@ -802,9 +803,9 @@ const registerButton = {
             }
 
         }
-
-
-        const result = registerForm.registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
+        const interests = document.querySelector("input[name=interest]");
+        interests.value = interestsValue;
+        // const result = registerForm.registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
         document.querySelector("#registerForm").submit();
         return true;
     },
