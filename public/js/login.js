@@ -1,4 +1,5 @@
 import {user} from "./utils.js"
+import { hex_sha512 } from "./sha512.min.js";
 
 export const login = {
     makeLoginPage() {
@@ -34,8 +35,8 @@ export const login = {
         form.appendChild(registerButtonContainer);
         form.setAttribute("action", "./loginpage/login");
         form.setAttribute("method", "post");
-        form.setAttribute("name", "login");
-        form.setAttribute("onsubmit", "return loginForm.checkIDAndPassword()");
+        // form.setAttribute("name", "login");
+        // form.setAttribute("onsubmit", "return login.checkIDAndPassword()");
         loginContainer.appendChild(form);
         loginContainer.appendChild(loginError);
 
@@ -56,12 +57,13 @@ export const login = {
     makeLoginButton(container, type) {
         const align1 = document.createElement('div');
         const align2 = document.createElement('div');
-        const submit = document.createElement("input");
-        submit.setAttribute("type", "submit");
+        const submit = document.createElement("button");
+        submit.setAttribute("type", "button");
         submit.className = "btn btn-success btn-lg";
         submit.id = `loginbutton`;
         submit.textContent = type;
         submit.style.width = "100%";
+        submit.addEventListener('click', this.checkIDAndPassword);
         align1.className = "col-md-3 col-xs-3 col-sm-3";
         align2.className = "col-md-7 col-xs-7 col-sm-7 loginform-container";
         align2.appendChild(submit);
@@ -78,7 +80,7 @@ export const login = {
         button.textContent = type;
         button.style.width = "100%";
         button.addEventListener("click", () => {
-            window.location.href = "#register";
+            window.location.href = "/register";
         });
         align1.className = "col-md-3 col-xs-3 col-sm-3";
         align2.className = "col-md-7 col-xs-7 col-sm-7 loginform-container";
@@ -87,21 +89,32 @@ export const login = {
         container.appendChild(align2);
     },
     checkIDAndPassword() {
-        console.log("eee");
+        //console.log("eee");
         //id, password check;
+        
         const id = document.querySelector("input[name=loginid]");
         const password = document.querySelector("input[name=loginpassword]");
-        console.log(users.id, id.value, users.password, password.value);
-        if (users.id === id.value && users.password === password.value) {
-            console.log(users.id, id.value, users.password, password.value);
-            return true;
-        } else {
-            const printError = document.querySelector("#printError");
-            printError.style.textAlign = "center";
-            printError.innerHTML = "아이디와 비밀번호를 다시 확인해주세요";
-            printError.style.color = "red";
-            return false;
-        }
+        console.log(id.value, password.value);
+        fetch('/loginpage/login',{
+            method:`post`,
+            body:JSON.stringify({
+                loginid: id.value,
+                loginpassword : hex_sha512(id.value+password.value)
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response=>{
+            response.json().then(res=>{
+                if(res.result){
+                    window.location.href="";
+                }
+                const printError = document.querySelector("#printError");
+                printError.style.textAlign = "center";
+                printError.innerHTML = "아이디와 비밀번호를 다시 확인해주세요";
+                printError.style.color = "red";
+            });
+        });
     }
 }
 

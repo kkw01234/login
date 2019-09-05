@@ -1,5 +1,5 @@
 import { insertSentenceHTML, user } from "./utils.js";
-
+import {hex_sha512} from "./sha512.min.js";
 const registerEnum = {
     DEFAULT: { content: "", color: "black" },
     INVALID_ID: { content: `5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.`, color: "red" },
@@ -805,6 +805,9 @@ const registerButton = {
 
         }
         const interestsHidden = document.querySelector("input[name=interests]");
+        /*sha-512를 이용한 암호화(단방향성)*/
+        document.querySelector('input[name=password]').value = hex_sha512(idValue+passwordValue);
+        document.querySelector('input[name=reconfirmationPassword]').value = "";
         interestsHidden.setAttribute("value", interestsValue);
         // const result = registerForm.registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
         document.querySelector("#registerForm").submit();

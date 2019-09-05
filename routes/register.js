@@ -17,6 +17,7 @@ router.post('/checkid',async function(req,res,next){
     res.send({result: result.length > 0 ? true : false});
 });
 router.post('/register',async function(req,res,next){
+    console.log(req.body);
     const result = userRepository.insertUser(req.body);
     
     if(await result){

@@ -12,12 +12,13 @@ router.post('/login',async function(req,res,next){
   const password = req.body.loginpassword;
   const result = userRepository.checkUser(id, password);
   if(await result.length > 0){
-
+    res.send({result:true});
     res.redirect("/");
     // res.render("index",{title: "메인페이지", address:""});
-  }else 
-    res.send({result : "error"});
-    res.redirect("/loginpage");
-});
+  }else {
+    res.send({result : false});
+    // res.redirect("/loginpage");
+  }
+  });
 
 module.exports = router;
