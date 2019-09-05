@@ -27,7 +27,7 @@ export const register = {
         return `
             <header>회원가입</header>
         <div id="register-container">
-        <form action="/register" name="register" method="post" id="registerForm">
+        <form action="/registerpage/register" name="register" method="post" id="registerForm">
         <div class="input-container">
             <p>아이디</p>
             <div class="inputText">
@@ -455,7 +455,7 @@ const email = {
 
             const enumResult = this.checkEmail(emailform.value);
             insertSentenceHTML(errordiv, enumResult.content, enumResult.color);
-            if (enumResult === register.DEFAULT) {
+            if (enumResult === registerEnum.DEFAULT) {
                 emailChecking = true;
             }
         });
@@ -778,6 +778,7 @@ const registerButton = {
             관심사: interestsValue,
             약관: checkTerm
         }
+        console.log(registerUser);
         for (let key in registerUser) {
 
             if (!registerUser[key]) {
@@ -803,8 +804,8 @@ const registerButton = {
             }
 
         }
-        const interests = document.querySelector("input[name=interest]");
-        interests.value = interestsValue;
+        const interestsHidden = document.querySelector("input[name=interests]");
+        interestsHidden.setAttribute("value", interestsValue);
         // const result = registerForm.registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
         document.querySelector("#registerForm").submit();
         return true;

@@ -1,7 +1,8 @@
-const {userdao} = require("../dao/userdao.js");
+const {appDAO} = require("../dao/appdao.js")
+const {UserRepository} = require("../repository/userRepository.js");
 const express = require('express');
 const router = express.Router();
-
+const userRepository = new UserRepository(appDAO);
 
 /* GET registerpage listing. */
 router.get('/', function(req, res, next) {
@@ -9,15 +10,16 @@ router.get('/', function(req, res, next) {
 });
 router.post('/checkid',async function(req,res,next){
     const id = req.body.id;
-    userdao.makeUser();
+    userRepository.makeUser();
     
-    const result = await userdao.checkId(id);
+    const result = await userRepository.checkId(id);
     console.log(result);
-    res.send({result: result});
+    res.send({result: result.length > 0 ? true : false});
 });
 router.post('/register',function(req,res,next){
-  const name= req.body;
-  console.log(name);
+    console.log(req.body);
+    userRepository.insertUser(req.body);
+    
 });
 
 module.exports = router;
