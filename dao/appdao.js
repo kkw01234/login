@@ -25,7 +25,7 @@ const appDAO = {
         return new Promise((resolve, reject)=>{
             this.db.run(query, params, function(err){
                 if(err) reject(err);
-                resolve();
+                resolve(true);
             })
         });
     }

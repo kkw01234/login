@@ -16,10 +16,12 @@ router.post('/checkid',async function(req,res,next){
     console.log(result);
     res.send({result: result.length > 0 ? true : false});
 });
-router.post('/register',function(req,res,next){
-    console.log(req.body);
-    userRepository.insertUser(req.body);
-    
+router.post('/register',async function(req,res,next){
+    const result = userRepository.insertUser(req.body);
+    if(await result){
+      res.render("index",{title: "메인페이지", address:""});
+    }else
+      res.send({result : "error"});
 });
 
 module.exports = router;
