@@ -32,8 +32,8 @@ export const login = {
         form.appendChild(passwordContainer);
         form.appendChild(loginButtonContainer);
         form.appendChild(registerButtonContainer);
-        form.setAttribute("action", "./main.html");
-        form.setAttribute("method", "get");
+        form.setAttribute("action", "./loginpage/login");
+        form.setAttribute("method", "post");
         form.setAttribute("name", "login");
         form.setAttribute("onsubmit", "return loginForm.checkIDAndPassword()");
         loginContainer.appendChild(form);

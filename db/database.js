@@ -16,6 +16,9 @@ const query = {
      },
      regtsterUser(){
          return `INSERT INTO user VALUES(?,?,?,?,?,?,?,?)`;
+     },
+     checkUser(){
+         return `SELECT user_id FROM user WhERE user_id = ? and user_password = ?`;
      }    
 }
 const table = {

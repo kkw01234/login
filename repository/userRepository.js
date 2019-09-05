@@ -13,6 +13,9 @@ class UserRepository{
     async insertUser(user){
         return this.dao.run(query.regtsterUser(),[user.id,user.password,user.name,[user.birthYear,user.birthMonth,user.birthDate].join("-"),user.gender,user.email,user.phone,user.interests])
     }
+    async checkUser(id, password){
+        return this.dao.all(query.checkUser(),[id, password]);
+    }
 }
 
 
