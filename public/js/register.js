@@ -1,30 +1,30 @@
-import { insertSentenceHTML,user } from "./utils.js";
+import { insertSentenceHTML, user } from "./utils.js";
 
 const registerEnum = {
-    DEFAULT : {content: "", color:"black"},
-    INVALID_ID :{content :`5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.`,color:"red"},
-    VALID_ID : {content:`사용 가능한 아이디입니다.`, color:"green"},
-    EXIST_USER : {content : "이미 사용중인 아이디 입니다.", color : "red"},
-    SAFETY_PASSWORD :{content : "안전한 비밀번호 입니다.", color :"green"},
-    IMPROPER_LENGTH_PASSWORD:{content :"8자 이상 16자 이하로 입력해주세요",color:"red"},
-    NOT_FIND_CAPITAL_LETTER:{content:"영문 대문자를 최소 1자 이상 포함해주세요",color:"red"},
-    NOT_FIND_NUMBER:{content: "숫자를 최소 1자 이상 포함해주세요", color:"red"},
-    NOT_FIND_SPECIAL_LETTER:{content:"특수문자를 최소 1자 이상 포함해주세요", color:"red"},
-    NOT_MATCHING_PASSWORD:{content:`비밀번호가 일치하지 않습니다.`, color:`red`},
-    MATCHING_PASSWORD:{content:"비밀번호가 일치합니다.", color:"green"},
-    INVALID_BIRTH_YEAR:{content:`태어난 년도 4자리를 정확하게 입력하세요`, color: `red`},
-    UNABLE_REGISTER:{content:`15세 이상 99세 이하일 경우만 회원가입 하실 수 있습니다.`,color:`red`},
-    INVALID_BIRTH_MONTH:{content:`월을 선택해 주세요`, color:"red"},
-    INVALID_BIRTH_DATE:{content:`정확한 일자를 입력해주세요`, color:"red"},
-    INVALID_EMAIL:{content:`이메일 주소를 확인하세요`, color:"red"},
-    INVALID_PHONE_NUMBER:{content:"형식에 맞지않는 번호입니다.",color:`red`},
-    OVER_THREE_TAGS:{content:"관심사를 3개 이상 입력해 주세요", color:`red`},
+    DEFAULT: { content: "", color: "black" },
+    INVALID_ID: { content: `5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.`, color: "red" },
+    VALID_ID: { content: `사용 가능한 아이디입니다.`, color: "green" },
+    EXIST_USER: { content: "이미 사용중인 아이디 입니다.", color: "red" },
+    SAFETY_PASSWORD: { content: "안전한 비밀번호 입니다.", color: "green" },
+    IMPROPER_LENGTH_PASSWORD: { content: "8자 이상 16자 이하로 입력해주세요", color: "red" },
+    NOT_FIND_CAPITAL_LETTER: { content: "영문 대문자를 최소 1자 이상 포함해주세요", color: "red" },
+    NOT_FIND_NUMBER: { content: "숫자를 최소 1자 이상 포함해주세요", color: "red" },
+    NOT_FIND_SPECIAL_LETTER: { content: "특수문자를 최소 1자 이상 포함해주세요", color: "red" },
+    NOT_MATCHING_PASSWORD: { content: `비밀번호가 일치하지 않습니다.`, color: `red` },
+    MATCHING_PASSWORD: { content: "비밀번호가 일치합니다.", color: "green" },
+    INVALID_BIRTH_YEAR: { content: `태어난 년도 4자리를 정확하게 입력하세요`, color: `red` },
+    UNABLE_REGISTER: { content: `15세 이상 99세 이하일 경우만 회원가입 하실 수 있습니다.`, color: `red` },
+    INVALID_BIRTH_MONTH: { content: `월을 선택해 주세요`, color: "red" },
+    INVALID_BIRTH_DATE: { content: `정확한 일자를 입력해주세요`, color: "red" },
+    INVALID_EMAIL: { content: `이메일 주소를 확인하세요`, color: "red" },
+    INVALID_PHONE_NUMBER: { content: "형식에 맞지않는 번호입니다.", color: `red` },
+    OVER_THREE_TAGS: { content: "관심사를 3개 이상 입력해 주세요", color: `red` },
     // CHECK_INPUT_USER:{content:`${this.key}를 확인해주세요`,color:`red`,setKey(key){this.key = key;return this;}}
 }
 
 export const register = {
     render() {
-        return  `
+        return `
             <header>회원가입</header>
         <div id="register-container">
         <form action="" name="register" method="get" id="registerForm">
@@ -117,7 +117,7 @@ export const register = {
     `
     },
 
-    
+
     init() {
 
         id.init();
@@ -164,7 +164,7 @@ const id = {
         if (!this.checkAvailableId(value)) {
             return registerEnum.INVALID_ID;
         }
-        if (!this.findUser(value)) {
+        if (this.findUser(value)) {
             return registerEnum.EXIST_USER;
         }
         return registerEnum.VALID_ID;
@@ -180,15 +180,25 @@ const id = {
             return true;
         } else return false;
     },
-    findUser(id) {
-        fetch(`/registerpage/checkid?id=${id}`,{
-            method : `get`,
-            // body : JSON.stringify({id:id}),
-            headers:new Headers()
-        }).then((res)=>{
-            console.log(res);
+    async findUser(id) {
+        return new Promise((resolve) => {
+            fetch(`/registerpage/checkid`, {
+                method: `post`,
+                body: JSON.stringify({
+                    id: id
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then((res) => {
+                res.json().then(res => {
+                    console.log(res.result);
+                    resolve(res.result);
+                });
+            });
+
         });
-        
+
         //return user.id !== id;
     },
 
@@ -207,12 +217,12 @@ const password = {
             insertSentenceHTML(reconfirmationPasswordError, registerEnum.DEFAULT.content);
             if (enumResult == registerEnum.SAFETY_PASSWORD) {
                 passwordChecking = true;
-            } 
+            }
         });
         reconfirmationPasswordform.addEventListener("input", () => {
             reconfirmationPasswordChecking = false;
             const enumResult = this.checkReconfirmationandPassword(passwordform.value, reconfirmationPasswordform.value);
-            insertSentenceHTML(reconfirmationPasswordError,enumResult.content, enumResult.color);
+            insertSentenceHTML(reconfirmationPasswordError, enumResult.content, enumResult.color);
             if (enumResult === registerEnum.MATCHING_PASSWORD) {
                 reconfirmationPasswordChecking = true;
             }
@@ -262,7 +272,7 @@ const password = {
 
 
 }
-const registerName =  {
+const registerName = {
     init() {
         const nameForm = document.querySelector('input[name=name]');
         this.clearNameForm = () => {
@@ -545,7 +555,7 @@ const interests = {
                 if (!this.checkInterests()) {
                     insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
                 } else
-                insertSentenceHTML(document.querySelector('#interestsError'), "");
+                    insertSentenceHTML(document.querySelector('#interestsError'), "");
             }
         });
     },
@@ -695,7 +705,7 @@ const initializationButton = {
 
         initialization.addEventListener("click", this.initializationListener);
     },
-    initializationListener(){
+    initializationListener() {
         const modal = document.querySelector(".modal");
         const modalContent = document.querySelector(".modal-content");
         const p = document.createElement('p');
@@ -724,7 +734,7 @@ const initializationButton = {
         modal.style.display = 'block';
         return false;
     },
-    deleteAll(){
+    deleteAll() {
         const modal = document.querySelector(".modal");
         id.clearIdForm();
         password.clearPasswordForm();
