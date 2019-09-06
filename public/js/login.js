@@ -1,5 +1,6 @@
 import {user} from "./utils.js"
 import { hex_sha512 } from "./sha512.min.js";
+import { router } from "./render.js";
 
 export const login = {
     makeLoginPage() {
@@ -108,7 +109,7 @@ export const login = {
             response.json().then(res=>{
                 console.log(res);
                 if(res.result){
-                    window.location.href="/";
+                  router("/",true);
                 }
                 const printError = document.querySelector("#printError");
                 printError.style.textAlign = "center";

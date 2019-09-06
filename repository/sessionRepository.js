@@ -16,6 +16,8 @@ class SessionRepository{
         return await this.dao.run(query.deleteSession(),[sessionid]);
     }
     async selectSession(sessionid){
+        if(!sessionid)
+            return [];
         return await this.dao.run(query.findSession(),[sessionid]);
     }
 

@@ -1,5 +1,6 @@
 import { insertSentenceHTML, user } from "./utils.js";
 import { hex_sha512 } from "./sha512.min.js";
+import { router } from "./render.js";
 const registerEnum = {
     DEFAULT: { content: "", color: "black" },
     INVALID_ID: { content: `5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.`, color: "red" },
@@ -26,7 +27,7 @@ export const register = {
     render() {
         return `
         <div class="title">회원가입</div>
-        <form action="/registerpage/register" name="register" method="post" id="registerForm">
+        <form action="" name="register" method="post" id="registerForm">
         <div class="input-container">
             <p>아이디</p>
             <div class="inputText">
@@ -804,17 +805,29 @@ const registerButton = {
         }
         const interestsHidden = document.querySelector("input[name=interests]");
         /*sha-512를 이용한 암호화(단방향성)*/
-        document.querySelector('input[name=password]').value = hex_sha512(idValue + passwordValue);
-        document.querySelector('input[name=reconfirmationPassword]').value = "";
-        interestsHidden.setAttribute("value", interestsValue);
-        // const result = registerForm.registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);
-        document.querySelector("#registerForm").submit();
+        // document.querySelector('input[name=password]').value = hex_sha512(idValue + passwordValue);
+        // document.querySelector('input[name=reconfirmationPassword]').value = "";
+        // interestsHidden.setAttribute("value", interestsValue);
+        fetch(`/registerpage/register`,{
+            method :`post`,
+            body : this.makeJSON(),
+            headers : {
+                "Content-Type": "application/json"
+            }
+        }).then(response=>{
+            response.json().then(data=>{
+                if(data.result){
+                    router("/",true);
+                }
+            });
+        });
+      
         return true;
     },
     makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue) {
         return JSON.stringify({
             id: idValue,
-            password: passwordValue,
+            password: hex_sha512(idValue+passwordValue),
             name: nameValue,
             birth: birthValue,
             gender: genderValue,

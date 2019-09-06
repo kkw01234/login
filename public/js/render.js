@@ -4,7 +4,7 @@ import { header } from "./header.js";
 import { footer } from "./footer.js";
 import { main } from "./main.js";
 import { nav } from "./nav.js";
-
+import {getCookie} from "./utils.js";
 const routerMap = {
     init(){
         this.firstloading = false;
@@ -14,72 +14,80 @@ const routerMap = {
         this.footer=document.querySelector("footer");
         this.title=document.querySelector("title");
     },
-    '/': function () {
+    '/': function (validatyCookie) {
+        
         fetch(`/?firstloading=${routerMap.firstloading}`).then((response)=>{
             routerMap.section.id = "main-container";
-            routerMap.section.innerHTML = main();
+            routerMap.section.innerHTML = main.render();
             routerMap.header.innerHTML = header.render();
-            routerMap.nav.innerHTML = nav.render('not_log_in_status');
+            console.log(validatyCookie);
+            
             routerMap.footer.innerHTML = footer.render();
             
             if(routerMap.firstloading){
-                response.text().then(res=>console.log(res));
                 response.json().then((res)=>{
                     routerMap.title = res.title;
+                    console.log(res.validatyCookie);
+                    routerMap.nav.innerHTML = nav.render(res.validatyCookie);
+                    nav.addEvent(document.querySelector(".logout"));
                 });
-            }
+            }else
+                routerMap.nav.innerHTML = nav.render(validatyCookie);
             routerMap.firstloading = true;
         });
        
     },
-    '/loginpage': function () {
+    '/loginpage': function (validatyCookie = false) {
         fetch(`/loginpage?firstloading=${routerMap.firstloading}`
            ).then((response)=>{
             routerMap.section.innerHTML = "";
             routerMap.section.id = "login-container";
             routerMap.section.appendChild(login.makeLoginPage());
             routerMap.header.innerHTML = header.render();
-            routerMap.nav.innerHTML = nav.render('not_log_in_status');
             routerMap.footer.innerHTML = footer.render();
             if(routerMap.firstloading){
                 response.json().then((res)=>{
                     routerMap.title = res.title;
+                    console.log(res.validatyCookie);
+                    routerMap.nav.innerHTML = nav.render(res.validatyCookie);
                 });
-            }
+            }else
+                routerMap.nav.innerHTML = nav.render(validatyCookie);
            
             routerMap.firstloading = true;
 
         });
        
     },
-    '/registerpage': function () {
+    '/registerpage': function (validatyCookie) {
         fetch(`/registerpage?firstloading=${routerMap.firstloading}`).then((response)=>{
             routerMap.section.id = "register-container"
             routerMap.section.innerHTML = register.render();
             register.init();
             routerMap.header.innerHTML = header.render();
-            routerMap.nav.innerHTML = nav.render('not_log_in_status');
             routerMap.footer.innerHTML = footer.render();
             if(routerMap.firstloading){
                 response.json().then((res)=>{
                     routerMap.title = res.title;
+                    routerMap.nav.innerHTML = nav.render(res.validatyCookie);
                 });
-            }
+            }else
+                routerMap.nav.innerHTML = nav.render(validatyCookie);
             routerMap.firstloading = true;
         });
         
     },
-    otherwise() {
+    otherwise() { /* Error*/
         this.section.innerHTML = 'NOT FOUND';
     }
 }
 
-export const router = (address)=>{
+
+export const router = (address,validatyCookie)=>{
     console.log(address);
-    (routerMap[address]||routerMap['otherwise'])();
+    (routerMap[address]||routerMap['otherwise'])(validatyCookie);
 }
 const navigator = document.querySelector("nav");
-console.log(navigator);
 navigator.addEventListener('click', e => {
     if (!e.target || e.target.nodeName !== 'A') return;
     e.preventDefault();
