@@ -11,16 +11,14 @@ router.get('/', function(req, res, next) {
 router.post('/checkid',async function(req,res,next){
     const id = req.body.id;
     userRepository.makeUser();
-    
     const result = await userRepository.checkId(id);
     res.send({result: result.length > 0 ? true : false});
 });
 router.post('/register',async function(req,res,next){
     console.log(req.body);
-    const result = userRepository.insertUser(req.body);
-    
-    if(await result){
-      res.redirect("/");
+    const result = await userRepository.insertUser(req.body);
+    if(result){
+      res.send({result : true});
       // res.render("index",{title: "메인페이지", address:""});
     }else
       res.send({result : "error"});

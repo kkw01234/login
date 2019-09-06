@@ -41,7 +41,7 @@ const appDAO = {
      * 
      * execute query statemet (결과값이 없는 insert, update)
      * 
-      @param {String} query sql grammar
+     * @param {String} query sql grammar
      * @param {Array} parmas array of variables
      * @returns {Promise} if query is execute correctly, return true else return error
      * 

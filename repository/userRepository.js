@@ -15,7 +15,7 @@ class UserRepository{
      * 
      */
     async makeUser() {
-        return this.dao.run(query.createUserTable());
+        return await this.dao.run(query.createUserTable());
     }
     /**
      * 
@@ -24,7 +24,7 @@ class UserRepository{
      * 
      */
     async checkId(id) {
-        return this.dao.all(query.checkId(), [id]);
+        return await this.dao.all(query.checkId(), [id]);
     }
     /**
      * insert user in the database
@@ -33,7 +33,7 @@ class UserRepository{
      * 
      */
     async insertUser(user){
-        return this.dao.run(query.regtsterUser(),[user.id,user.password,user.name,[user.birthYear,user.birthMonth,user.birthDate].join("-"),user.gender,user.email,user.phone,user.interests])
+        return await this.dao.run(query.regtsterUser(),[user.id,user.password,user.name,[user.birthYear,user.birthMonth,user.birthDate].join("-"),user.gender,user.email,user.phone,user.interests])
     }
     /**
      * if user want to log in, check id and password
@@ -43,7 +43,7 @@ class UserRepository{
      * @returns {String} if id and password exist in database, return user's object 
      */
     async checkUser(id, password){
-        return this.dao.all(query.checkUser(),[id, password]);
+        return await this.dao.all(query.checkUser(),[id, password]);
     }
 }
 
