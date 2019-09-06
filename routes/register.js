@@ -6,7 +6,11 @@ const userRepository = new UserRepository(appDAO);
 
 /* GET registerpage listing. */
 router.get('/', function(req, res, next) {
-  res.render("index", {title:`회원가입 폼`,address:"registerpage"});
+  const firstloading = req.query.firstloading || false;
+  if(firstloading){
+    res.send({title:"회원가입 폼"});
+  }else
+    res.render("index", {title:`회원가입 폼`,address:"/registerpage"});
 });
 router.post('/checkid',async function(req,res,next){
     const id = req.body.id;
