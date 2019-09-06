@@ -27,7 +27,16 @@ const query = {
         return `INSERT INTO user VALUES(?,?,?,?,?,?,?,?)`;
     },
     checkUser() {
-        return `SELECT user_id FROM user WhERE user_id = ? and user_password = ?`;
+        return `SELECT user_id,user_name FROM user WhERE user_id = ? and user_password = ?`;
+    },
+    findSession(){
+        return `SELECT * FROM session WHERE session_id = ?`;
+    },
+    insertSession(){
+        return `INSERT INTO session VALUES(?,?,?)`;
+    },
+    deleteSession(){
+        return `DELETE FROM session WHERE session_id = ?`;
     }
 }
 const table = {

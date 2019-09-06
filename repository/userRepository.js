@@ -1,5 +1,6 @@
+const {appDAO} = require("../dao/appdao.js");
 const { query } = require("../db/database.js");
-const sqlite3 = require('sqlite3').verbose();
+
 class UserRepository{
     /**
      * @constructor
@@ -53,7 +54,4 @@ class UserRepository{
 
 
 
-
-module.exports = {
-    UserRepository
-}
+module.exports = new UserRepository(appDAO);
