@@ -8,7 +8,7 @@ export const nav = {
         return `<a href="">Main Page</a><a href="logout">Log out</a>`;
     },
     not_log_in_status(){
-        return `<a href="loginpage">Sign in</a><a href="registerpage"> Sign up</a>`
+        return `<a href="/loginpage">Sign in</a><a href="/registerpage"> Sign up</a>`
     },
     otherwise(){
         return ``;

@@ -5,7 +5,9 @@ const { UserRepository } = require('../repository/userRepository.js');
 const userRepository = new UserRepository(appDAO);
 /* GET registerpage listing. */
 router.get('/', function (req, res, next) {
-  res.render("index", { title: `로그인`, address: "loginpage" });
+  res.send({
+    address : "/register"
+  });
 });
 router.post('/login', async function (req, res, next) {
   const id = req.body.loginid;
