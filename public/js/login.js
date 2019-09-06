@@ -109,7 +109,9 @@ export const login = {
             response.json().then(res=>{
                 console.log(res);
                 if(res.result){
-                  router("/",true);
+                    router("/");
+                    history.pushState("",null,"/");
+                    
                 }
                 const printError = document.querySelector("#printError");
                 printError.style.textAlign = "center";

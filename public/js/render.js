@@ -14,7 +14,7 @@ const routerMap = {
         this.footer=document.querySelector("footer");
         this.title=document.querySelector("title");
     },
-    '/': function (validatyCookie) {
+    '/': function (validatyCookie =false) {
         
         fetch(`/?firstloading=${routerMap.firstloading}`).then((response)=>{
             routerMap.section.id = "main-container";
@@ -29,9 +29,10 @@ const routerMap = {
                     routerMap.title = res.title;
                     console.log(res.validatyCookie);
                     routerMap.nav.innerHTML = nav.render(res.validatyCookie);
-                    nav.addEvent(document.querySelector(".logout"));
+                    if(res.validatyCookie === true)
+                        nav.addEvent(document.querySelector(".logout"));
                 });
-            }else
+            }else //reloading 되었을경우
                 routerMap.nav.innerHTML = nav.render(validatyCookie);
             routerMap.firstloading = true;
         });
@@ -59,7 +60,7 @@ const routerMap = {
         });
        
     },
-    '/registerpage': function (validatyCookie) {
+    '/registerpage': function (validatyCookie=false) {
         fetch(`/registerpage?firstloading=${routerMap.firstloading}`).then((response)=>{
             routerMap.section.id = "register-container"
             routerMap.section.innerHTML = register.render();
@@ -69,6 +70,7 @@ const routerMap = {
             if(routerMap.firstloading){
                 response.json().then((res)=>{
                     routerMap.title = res.title;
+                    console.log(res.validatyCookie);
                     routerMap.nav.innerHTML = nav.render(res.validatyCookie);
                 });
             }else
@@ -82,8 +84,13 @@ const routerMap = {
     }
 }
 
-
-export const router = (address,validatyCookie)=>{
+/**
+ * 
+ * @param {String} address 
+ * @param {Boolean} validatyCookie 
+ */
+export const router = (address,validatyCookie = false)=>{
+    
     console.log(address);
     (routerMap[address]||routerMap['otherwise'])(validatyCookie);
 }
@@ -96,6 +103,7 @@ navigator.addEventListener('click', e => {
     router(path);
 });
 window.addEventListener('popstate', e => {
+    console.log(e.state.path);
     router(e.state.path);
 });
 routerMap.init();

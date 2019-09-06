@@ -17,7 +17,7 @@ class SessionRepository{
     }
     async selectSession(sessionid){
         if(!sessionid)
-            return [];
+            return false;
         return await this.dao.run(query.findSession(),[sessionid]);
     }
 

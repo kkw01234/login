@@ -21,17 +21,16 @@ router.post('/login', async function (req, res, next) {
   const id = req.body.loginid;
   const password = req.body.loginpassword;
   const result = await userRepository.checkUser(id, password);
-  console.log(result);
   if (result.length > 0) {
     const sessionid = uuidv4();
     await sessionRepository.insertSession(sessionid,result[0].user_id,result[0].user_name);
     res.cookie('sessionid', sessionid,{
       maxAge : 1000 * 60 * 10
     })
-    res.send({ result: true, validatycookie : true });
+    res.send({ result: true, validatyCookie : true });
   } else {
     console.log(false,JSON.stringify(result));
-    res.send({ result: false, validatycookie : false });
+    res.send({ result: false, validatyCookie : false });
   }
 });
 router.get("/logout",async function(req,res,next){

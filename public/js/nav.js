@@ -2,7 +2,8 @@
 import {router} from "./render.js";
 export const nav = {
     render(validaty){
-        if(validaty === false){
+        console.log(validaty);
+        if(validaty === true){
             return `<nav class="navigation">${this.log_in_status()}</nav>`;
         }else
             return `<nav class="navigation">${this.not_log_in_status()}</nav>`;
@@ -23,8 +24,9 @@ export const nav = {
         fetch("/loginpage/logout").then(response=>{
             response.json().then(data=>{
                 console.log(data);
-                if(data.result == true){
-                    router("/",false);
+                if(data.result === true){
+                    // history.pushState("/")
+                    history.back();
                 }else
                     alert("다시 로그아웃 해주세요");
             });

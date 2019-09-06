@@ -33,10 +33,10 @@ router.post('/register',async function(req,res,next){
       res.cookie('sessionid', sessionid,{
         maxAge : 1000 * 60 * 10
       })
-      res.send({result : true});
+      res.send({result : true,validatyCookie:true});
       // res.render("index",{title: "메인페이지", address:""});
     }else
-      res.send({result : false});
+      res.send({result : false,validatyCookie:false});
 });
 
 module.exports = router;

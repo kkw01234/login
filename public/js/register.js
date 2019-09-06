@@ -817,6 +817,7 @@ const registerButton = {
         }).then(response=>{
             response.json().then(data=>{
                 if(data.result){
+                    history.pushState(null,null,"/");
                     router("/",true);
                 }
             });
