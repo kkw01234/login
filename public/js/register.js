@@ -1,5 +1,5 @@
 import { insertSentenceHTML, user } from "./utils.js";
-import {hex_sha512} from "./sha512.min.js";
+import { hex_sha512 } from "./sha512.min.js";
 const registerEnum = {
     DEFAULT: { content: "", color: "black" },
     INVALID_ID: { content: `5~20자의 영문 소문자, 숫자와 특수기호(_)(-) 만 사용 가능합니다.`, color: "red" },
@@ -25,8 +25,7 @@ const registerEnum = {
 export const register = {
     render() {
         return `
-            <header>회원가입</header>
-        <div id="register-container">
+        <div class="title">회원가입</div>
         <form action="/registerpage/register" name="register" method="post" id="registerForm">
         <div class="input-container">
             <p>아이디</p>
@@ -108,7 +107,6 @@ export const register = {
             <button type="button" class="btn btn-middle" id="register-button">가입하기</input>
         </div>
         </form>
-    </div>
     <div id="register-modal" class="modal">
         <div class="modal-content">
            
@@ -164,7 +162,7 @@ const id = {
         if (!this.checkAvailableId(value)) {
             return registerEnum.INVALID_ID;
         }
-        
+
         if (await this.findUser(value)) {
             return registerEnum.EXIST_USER;
         }
@@ -806,7 +804,7 @@ const registerButton = {
         }
         const interestsHidden = document.querySelector("input[name=interests]");
         /*sha-512를 이용한 암호화(단방향성)*/
-        document.querySelector('input[name=password]').value = hex_sha512(idValue+passwordValue);
+        document.querySelector('input[name=password]').value = hex_sha512(idValue + passwordValue);
         document.querySelector('input[name=reconfirmationPassword]').value = "";
         interestsHidden.setAttribute("value", interestsValue);
         // const result = registerForm.registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue, checkTerm);

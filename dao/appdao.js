@@ -32,7 +32,6 @@ const appDAO = {
     all(query, params = []){
         return new Promise((resolve,reject)=>{
             this.db.all(query, params, function(err, rows){
-                console.log(query,params, rows);
                 if(err) reject(err);
                 resolve(rows);
             });

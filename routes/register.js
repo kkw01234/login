@@ -13,7 +13,6 @@ router.post('/checkid',async function(req,res,next){
     userRepository.makeUser();
     
     const result = await userRepository.checkId(id);
-    console.log(result);
     res.send({result: result.length > 0 ? true : false});
 });
 router.post('/register',async function(req,res,next){

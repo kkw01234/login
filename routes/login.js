@@ -10,15 +10,19 @@ router.get('/', function(req, res, next) {
 router.post('/login',async function(req,res,next){
   const id = req.body.loginid;
   const password = req.body.loginpassword;
-  const result = userRepository.checkUser(id, password);
-  if(await result.length > 0){
-    res.send({result:true});
-    res.redirect("/");
-    // res.render("index",{title: "메인페이지", address:""});
-  }else {
-    res.send({result : false});
-    // res.redirect("/loginpage");
-  }
+  userRepository.checkUser(id, password).then((result)=>{
+    if(result.length > 0){
+      res.send({result:true});
+      // res.render("index",{title: "메인페이지", address:""});
+    }else {
+      console.log(JSON.stringify(result));
+      res.send({result : false});
+      // res.redirect("/loginpage");
+    }
+  
+  ;
+ 
+ 
   });
-
+});
 module.exports = router;

@@ -106,8 +106,9 @@ export const login = {
             }
         }).then(response=>{
             response.json().then(res=>{
+                console.log(res);
                 if(res.result){
-                    window.location.href="";
+                    window.location.href="/";
                 }
                 const printError = document.querySelector("#printError");
                 printError.style.textAlign = "center";
