@@ -31,4 +31,14 @@ router.post('/login', async function (req, res, next) {
     res.send({ result: false });
   }
 });
+router.get("/logout",async function(req,res,next){
+  const sessionid = req.cookies.sessionid || 0;
+  if(!sessionid)
+      res.send({result: "error"});
+  const result = await sessionRepository.deleteSession(sessionid);
+  if(result)
+      req.clearCookie('sessionid');
+      res.send({result: true});
+  // Error 처리 필요
+});
 module.exports = router;

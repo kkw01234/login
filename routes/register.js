@@ -22,9 +22,9 @@ router.post('/checkid',async function(req,res,next){
 router.post('/register',async function(req,res,next){
 
     const sessionid = req.cookies.sessionid || 0;
-    if(sessionid){
-      res.send({result :"error"});
-    }
+    // if(sessionid){
+    //   res.send({result :"if you want to sign up, log out first"});
+    // }
     const result = await userRepository.insertUser(req.body);
     if(result){
       res.send({result : true});
