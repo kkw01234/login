@@ -80,7 +80,7 @@ const routerMap = {
         
     },
     otherwise() { /* Error*/
-        this.section.innerHTML = 'NOT FOUND';
+        routerMap.section.innerHTML = 'NOT FOUND';
     }
 }
 

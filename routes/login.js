@@ -4,7 +4,7 @@ const uuidv4 = require('uuid/v4');
 const userRepository = require("../repository/userRepository.js");
 const sessionRepository = require("../repository/sessionRepository.js");
 const {validateCookie} = require("../utils/utils.js");
-/* GET registerpage listing. */
+
 router.get('/',async function (req, res, next) {
   
   const firstloading = req.query.firstloading || false;
@@ -29,7 +29,6 @@ router.post('/login', async function (req, res, next) {
     })
     res.send({ result: true, validatyCookie : true });
   } else {
-    console.log(false,JSON.stringify(result));
     res.send({ result: false, validatyCookie : false });
   }
 });
@@ -41,7 +40,8 @@ router.get("/logout",async function(req,res,next){
   if(result){
     res.clearCookie('sessionid');
     res.send({result: true});
-  }
+  }else
+    res.send({result:false});
      
   // Error 처리 필요
 });

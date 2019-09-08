@@ -18,8 +18,15 @@ class SessionRepository{
     async selectSession(sessionid){
         if(!sessionid)
             return false;
-        return await this.dao.run(query.findSession(),[sessionid]);
+        return await this.dao.all(query.findSession(),[sessionid]);
     }
+    async updateSession(session){//주기변경
+        if(!session)
+            return false;
+        
+        return await this.dao.run(query.updateSession(),[session.sessionid,session.user_id,session.user_name]);
+    }
+   
 
 }
 
