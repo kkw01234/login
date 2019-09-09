@@ -8,10 +8,10 @@ export const nav = {
             return /*html*/`${this.not_log_in_status()}`;
     },
     log_in_status(validaty){
-        return /*html*/`<span class="logo"><img src="../images/logo.png"></span><span><span style="color:white">${validaty.user_name}님 환영합니다.</span><span class="btn logout">Log out</span><span>`;
+        return /*html*/`<span class="logo"><a href="#"><img href= "/" src="../images/logo.png"></a></span><span><span style="color:white">${validaty.user_name}님 환영합니다.</span><span class="btn logout">Log out</span><span>`;
     },
     not_log_in_status(){
-        return /*html*/`<span class="logo"><img src="../images/logo.png"></span><span><a class="btn" href="/loginpage">Sign in</a> <a class="btn" href="/registerpage"> Sign up</a></span>`
+        return /*html*/`<span class="logo"><a href="#"><img href= "/" src="../images/logo.png"></a></span><span><a class="btn" href="/loginpage">Sign in</a> <a class="btn" href="/registerpage"> Sign up</a></span>`
     },
     otherwise(){
         return ``;

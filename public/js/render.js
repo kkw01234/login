@@ -30,7 +30,6 @@ const routerMap = {
                 });
             });
         } else {
-            console.log(validatyCookie);
             routerMap.section.id = "main-container";
             routerMap.section.innerHTML = main.render();
             routerMap.header.innerHTML = header.render();
@@ -111,13 +110,15 @@ const router = (address, validatyCookie = false) => {
 }
 const navigator = document.querySelector("nav");
 navigator.addEventListener('click', e => {
-    if (!e.target || e.target.nodeName !== 'A') return;
+    console.log('click', e.target.nodeName);
+    if (!e.target) return;
     e.preventDefault();
     const path = e.target.getAttribute('href');
     history.pushState({ path }, null, path);
     router(path);
 });
 window.addEventListener('popstate', e => {
+    console.log('popstate',e);
     router(e.state.path);
 });
 routerMap.init();
