@@ -31,7 +31,7 @@ router.post('/register',async function(req,res,next){
     const sessionResult = await sessionRepository.insertSession(sessionid,req.body.id,req.body.name);
     if(userResult){
       res.cookie('sessionid', sessionid,{
-        maxAge : 1000 * 60 * 10
+        maxAge : setCookieTime()
       })
       res.send({result : true,validatyCookie:true});
       // res.render("index",{title: "메인페이지", address:""});

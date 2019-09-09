@@ -3,7 +3,11 @@ const validateCookie = (cookie)=>{
         return true;
     else return false;
 }
+const setCookieTime = ()=>{
+    return 1000 * 60 * 10;
+}
 
 module.exports = {
-    validateCookie
+    validateCookie,
+    setCookieTime
 }

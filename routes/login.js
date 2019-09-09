@@ -3,7 +3,7 @@ const router = express.Router();
 const uuidv4 = require('uuid/v4');
 const userRepository = require("../repository/userRepository.js");
 const sessionRepository = require("../repository/sessionRepository.js");
-const {validateCookie} = require("../utils/utils.js");
+const {validateCookie,setCookieTime} = require("../utils/utils.js");
 
 router.get('/',async function (req, res, next) {
   
@@ -25,7 +25,7 @@ router.post('/login', async function (req, res, next) {
     const sessionid = uuidv4();
     await sessionRepository.insertSession(sessionid,result[0].user_id,result[0].user_name);
     res.cookie('sessionid', sessionid,{
-      maxAge : 1000 * 60 * 10
+      maxAge : setCookieTime()
     })
     res.send({ result: true, validatyCookie : true });
   } else {

@@ -27,13 +27,10 @@ const routerMap = {
             if(routerMap.firstloading){
                 response.json().then((res)=>{
                     routerMap.title = res.title;
-                    console.log(res.validatyCookie);
-                    routerMap.nav.innerHTML = nav.render(res.validatyCookie);
-                    if(res.validatyCookie === true)
-                        nav.addEvent(document.querySelector(".logout"));
+                    nav.setNav(res.validatyCookie);
                 });
             }else //reloading 되었을경우
-                routerMap.nav.innerHTML = nav.render(validatyCookie);
+                nav.setNav(validatyCookie);
             routerMap.firstloading = true;
         });
        
@@ -49,11 +46,10 @@ const routerMap = {
             if(routerMap.firstloading){
                 response.json().then((res)=>{
                     routerMap.title = res.title;
-                    console.log(res.validatyCookie);
-                    routerMap.nav.innerHTML = nav.render(res.validatyCookie);
+                    nav.setNav(res.validatyCookie);
                 });
-            }else
-                routerMap.nav.innerHTML = nav.render(validatyCookie);
+            }else //reloading 되었을경우
+                nav.setNav(validatyCookie);
            
             routerMap.firstloading = true;
 
@@ -70,11 +66,10 @@ const routerMap = {
             if(routerMap.firstloading){
                 response.json().then((res)=>{
                     routerMap.title = res.title;
-                    console.log(res.validatyCookie);
-                    routerMap.nav.innerHTML = nav.render(res.validatyCookie);
+                    nav.setNav(res.validatyCookie);
                 });
-            }else
-                routerMap.nav.innerHTML = nav.render(validatyCookie);
+            }else //reloading 되었을경우
+                nav.setNav(validatyCookie);
             routerMap.firstloading = true;
         });
         
@@ -89,7 +84,7 @@ const routerMap = {
  * @param {String} address 
  * @param {Boolean} validatyCookie 
  */
-export const router = (address,validatyCookie = false)=>{
+const router = (address,validatyCookie = false)=>{
     
     console.log(address);
     (routerMap[address]||routerMap['otherwise'])(validatyCookie);
@@ -108,3 +103,8 @@ window.addEventListener('popstate', e => {
 });
 routerMap.init();
 // router("/"); //처음 로드 할 때
+
+export {
+    router,
+    routerMap
+}

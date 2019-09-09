@@ -17,7 +17,8 @@ const query = {
         return `CREATE TABLE IF NOT EXISTS session(
             session_id TEXT PRIMARY KEY,
             user_id TEXT,
-            user_name TEXT
+            user_name TEXT,
+            timeout TEXT
         )`
     },
     checkId(id) {
@@ -32,8 +33,8 @@ const query = {
     findSession(){
         return `SELECT * FROM session WHERE session_id = ?`;
     },
-    insertSession(){
-        return `INSERT INTO session VALUES(?,?,?)`;
+    insertSession(maxAge){
+        return `INSERT INTO session VALUES(?,?,?, datetime('now', 'localtime', '+${maxAge/1000} seconds'))`;
     },
     deleteSession(){
         return `DELETE FROM session WHERE session_id = ?`;
