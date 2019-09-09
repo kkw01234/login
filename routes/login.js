@@ -8,11 +8,10 @@ const {validateCookie,setCookieTime} = require("../utils/utils.js");
 router.get('/',async function (req, res, next) {
   
   const firstloading = req.query.firstloading || false;
-  const cookie = await sessionRepository.selectSession(req.cookies.sessionid || 0);
   if(firstloading){
-    res.send({title : "로그인", validatycookie : validateCookie(cookie)});
+    res.send({title : "로그인", validatycookie : req.validatyCookie});
   }else{
-    res.render('index',{title:"로그인",address:"/loginpage", validatycookie : validateCookie(cookie)});
+    res.render('index',{title:"로그인",address:"/loginpage", validatycookie : req.validatyCookie});
   }
 
 });

@@ -8,11 +8,10 @@ const uuidv4 = require('uuid/v4');
 /* GET registerpage listing. */
 router.get('/', function(req, res, next) {
   const firstloading = req.query.firstloading || false; 
-  const cookie = sessionRepository.selectSession(req.cookies.sessionid||0);
   if(firstloading){
-    res.send({title:"회원가입 폼",validatyCookie:validateCookie(cookie)});
+    res.send({title:"회원가입 폼",validatyCookie:req.validatyCookie});
   }else
-    res.render("index", {title:`회원가입 폼`,address:"/registerpage",validatyCookie:validateCookie(cookie)});
+    res.render("index", {title:`회원가입 폼`,address:"/registerpage",validatyCookie:req.validatyCookie});
 });
 router.post('/checkid',async function(req,res,next){
     const id = req.body.id;

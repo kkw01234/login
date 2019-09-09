@@ -41,6 +41,9 @@ const query = {
     },
     deleteTimeoutSession(){
         return `DELETE FROM session WHERE timeout < datetime('now', 'localtime')`;
+    },
+    updateSession(maxAge){
+        return `UPDATE session SET timeout = datetime('now', 'localtime', '+${maxAge/1000} seconds') where session_id = ?`;
     }
 }
 const table = {

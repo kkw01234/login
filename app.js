@@ -9,6 +9,8 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 const sessionRepository = require('./repository/sessionRepository.js');
+const {query} = require("./db/database.js");
+const {validateCookie} = require("./utils/utils.js");
 var app = express();
 
 // view engine setup
@@ -19,11 +21,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-setInterval(()=>{
-  console.log("deletetimeout");
-  sessionRepository.deleteTimeoutSession();
-},60000);
 
+// 들어올때마다 Session Check
+app.use(async function(req,res,next){ 
+    setImmediate(()=>{
+      sessionRepository.deleteTimeoutSession();
+    });
+    const cookie = await sessionRepository.selectSession(req.cookies.sessionid || 0);
+    setImmediate(()=>{
+      sessionRepository.updateSession(cookie[0]);
+    });
+    req.validatyCookie = validateCookie(cookie);
+    next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

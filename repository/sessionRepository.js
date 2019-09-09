@@ -11,7 +11,6 @@ class SessionRepository{
         return await this.dao.run(query.createSessionTable());
     }
     async insertSession(sessionid,id,name){
-        console.log(setCookieTime());
         return await this.dao.run(query.insertSession(setCookieTime()),[sessionid,id,name]);
     }
     async deleteSession(sessionid){
@@ -25,8 +24,8 @@ class SessionRepository{
     async updateSession(session){//주기변경
         if(!session)
             return false;
-        
-        return await this.dao.run(query.updateSession(),[session.sessionid,session.user_id,session.user_name]);
+            console.log(session);
+        return await this.dao.run(query.updateSession(setCookieTime()),[session.session_id]);
     }
     async deleteTimeoutSession(){
         await this.dao.run(query.deleteTimeoutSession());

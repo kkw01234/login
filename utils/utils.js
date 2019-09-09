@@ -1,5 +1,5 @@
 const validateCookie = (cookie)=>{
-    if(cookie.length >0)
+    if(Array.isArray(cookie) && cookie.length >0)
         return true;
     else return false;
 }
