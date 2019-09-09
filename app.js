@@ -11,6 +11,7 @@ var registerRouter = require('./routes/register');
 const sessionRepository = require('./repository/sessionRepository.js');
 const {query} = require("./db/database.js");
 const {validateCookie,setCookieTime} = require("./utils/utils.js");
+const fs = require('fs');
 var app = express();
 
 // view engine setup
@@ -27,23 +28,27 @@ app.use(async function(req,res,next){
     setImmediate(()=>{
       sessionRepository.deleteTimeoutSession();
     });
-    const cookie = await sessionRepository.selectSession(req.cookies.sessionid || 0);
-    setImmediate(()=>{
+    try{
+      const cookie = await sessionRepository.selectSession(req.cookies.sessionid || 0);
       sessionRepository.updateSession(cookie[0]);
-    });
-    if(cookie.length > 0){
-      res.cookie('sessionid', cookie[0].session_id,{
-        maxAge : setCookieTime()
-      });
-      if(validateCookie(cookie))
-          req.validatyCookie = {
-            user_id : cookie[0].user_id,
-            user_name : cookie[0].user_name
-          };
-    }else
-        req.validatyCookie = {user_id : "", user_name :""};
-    console.log(req.validatyCookie);
-    next();
+  
+      if(cookie.length > 0){
+        res.cookie('sessionid', cookie[0].session_id,{
+          maxAge : setCookieTime()
+        });
+        if(validateCookie(cookie))
+            req.validatyCookie = {
+              user_id : cookie[0].user_id,
+              user_name : cookie[0].user_name
+            };
+      }else
+          req.validatyCookie = {user_id : "", user_name :""};
+      console.log(req.validatyCookie);
+      next();
+    }catch(e){
+      next(e);
+    }
+    
 });
 
 app.use('/', indexRouter);
@@ -60,10 +65,19 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  const logs = JSON.parse(fs.readFileSync("./error/errorlog.json",{encoding : "utf-8"}));
+  // res.locals.message = err.message;
+  // res.locals.error = req.app.get('env') === 'development' ? err : {};
+  const date = new Date();
+  const newLog = {
+    ip : req.headers['x-forwared-for'] || req.connection.remoteAddress,
+    message : err.message,
+    error : err.stack,
+    date : `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+  }
+  
+  logs.push(newLog);
+  fs.writeFileSync("./error/errorlog.json",JSON.stringify(logs));
   // render the error page
   res.status(err.status || 500);
   res.render('error');

@@ -19,34 +19,44 @@ router.post('/login', async function (req, res, next) {
   
   const id = req.body.loginid;
   const password = req.body.loginpassword;
-  const result = await userRepository.checkUser(id, password);
-  if (result.length > 0) {
-    const sessionid = uuidv4();
-    await sessionRepository.insertSession(sessionid,result[0].user_id,result[0].user_name);
-    res.cookie('sessionid', sessionid,{
-      maxAge : setCookieTime()
-    });
-    res.send({ result: true, validatyCookie : {
-      user_id : result[0].user_id,
-      user_name : result[0].user_name
-    } });
-  } else {
-    res.send({ result: false, validatyCookie : {
-      user_id :"",
-      user_name : ""
-    } });
+  try{
+    const result = await userRepository.checkUser(id, password);
+    if (result.length > 0) {
+      const sessionid = uuidv4();
+      await sessionRepository.insertSession(sessionid,result[0].user_id,result[0].user_name);
+      res.cookie('sessionid', sessionid,{
+        maxAge : setCookieTime()
+      });
+      res.send({ result: true, validatyCookie : {
+        user_id : result[0].user_id,
+        user_name : result[0].user_name
+      } });
+    } else {
+      res.send({ result: false, validatyCookie : {
+        user_id :"",
+        user_name : ""
+      } });
+    }
+  }catch(e){
+    next(e);
   }
+ 
 });
 router.get("/logout",async function(req,res,next){
-  const sessionid = req.cookies.sessionid || 0;
-  if(!sessionid)
-      res.send({result: "error"});
-  const result = await sessionRepository.deleteSession(sessionid);
-  if(result){
-    res.clearCookie('sessionid');
-    res.send({result: true});
-  }else
-    res.send({result:false});
+  try{
+    const sessionid = req.cookies.sessionid || 0;
+    if(!sessionid)
+        res.send({result: false});
+    const result = await sessionRepository.deleteSession(sessionid);
+    if(result){
+      res.clearCookie('sessionid');
+      res.send({result: true});
+    }else
+      res.send({result:false});
+  }catch(e){
+    next(e);
+  }
+  
      
   // Error 처리 필요
 });

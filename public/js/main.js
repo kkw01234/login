@@ -1,12 +1,16 @@
-import {header} from "./header.js";
-import {footer} from "./footer.js";
+
 export const main = {
-    render(status){
+    render(){
         return `
         <div> This is main Page</div>
         `;
     },
-    
+    login_status(){
+
+    },
+    not_login_status(){
+        
+    }
 
 
 }

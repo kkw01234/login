@@ -15,9 +15,14 @@ router.get('/', function(req, res, next) {
 });
 router.post('/checkid',async function(req,res,next){
     const id = req.body.id;
-    userRepository.makeUser();
-    const result = await userRepository.checkId(id);
-    res.send({result: result.length > 0 ? true : false});
+    try{
+      await userRepository.makeUser();
+      const result = await userRepository.checkId(id);
+      res.send({result: result.length > 0 ? true : false});
+    }catch(e){
+      next(e);
+    }
+  
 });
 router.post('/register',async function(req,res,next){
 
@@ -26,17 +31,24 @@ router.post('/register',async function(req,res,next){
     //   res.send({result :"if you want to sign up, log out first"});
     // }
     console.log(req.body);
-    const userResult = await userRepository.insertUser(req.body);
-    const sessionid = uuidv4();
-    const sessionResult = await sessionRepository.insertSession(sessionid,req.body.id,req.body.name);
-    if(userResult){
-      res.cookie('sessionid', sessionid,{
-        maxAge : setCookieTime()
-      })
-      res.send({result : true,validatyCookie:{user_id : req.body.id, user_name:req.body.name}});
-      // res.render("index",{title: "메인페이지", address:""});
-    }else
-      res.send({result : false,validatyCookie:false});
+    try{
+      const userResult = await userRepository.insertUser(req.body);
+      console.log(userResult);
+      const sessionid = uuidv4();
+      const sessionResult = await sessionRepository.insertSession(sessionid,req.body.id,req.body.name);
+      if(userResult){
+        res.cookie('sessionid', sessionid,{
+          maxAge : setCookieTime()
+        })
+        res.send({result : true,validatyCookie:{user_id : req.body.id, user_name:req.body.name}});
+        // res.render("index",{title: "메인페이지", address:""});
+      }else
+        res.send({result : false,validatyCookie:false});
+    }catch(e){
+      // console.log(e);
+      next(e);
+    }
+   
 });
 
 module.exports = router;

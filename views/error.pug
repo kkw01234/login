@@ -1,6 +1,8 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  h1= `error 발생`
+  h2= `알수없는 에러 발생`
+  pre= `에러가 발생했습니다.`
+    a(href="history.go(-1)")= `바로가기`
+    = `를 눌러주세요!!`
