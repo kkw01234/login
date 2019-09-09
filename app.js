@@ -8,7 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
-
+const sessionRepository = require('./repository/sessionRepository.js');
 var app = express();
 
 // view engine setup
@@ -19,6 +19,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+setInterval(()=>{
+  console.log("deletetimeout");
+  sessionRepository.deleteTimeoutSession();
+},60000);
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -26,8 +26,12 @@ export const nav = {
                 if(data.result === true){
                     history.pushState(null,null,"/")
                     router("/");
-                }else
-                    alert("다시 로그아웃 해주세요");
+                }else{
+                    alert("Session에 문제가 있습니다. 다시 로그인 해주세요");
+                    history.pushState(null,null,'/loginpage');
+                    router("/loginpage");
+                }
+                    
             });
         });
     },

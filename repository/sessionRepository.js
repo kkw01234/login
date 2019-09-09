@@ -28,7 +28,9 @@ class SessionRepository{
         
         return await this.dao.run(query.updateSession(),[session.sessionid,session.user_id,session.user_name]);
     }
-   
+    async deleteTimeoutSession(){
+        await this.dao.run(query.deleteTimeoutSession());
+    }
 
 }
 

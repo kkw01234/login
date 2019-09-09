@@ -38,6 +38,9 @@ const query = {
     },
     deleteSession(){
         return `DELETE FROM session WHERE session_id = ?`;
+    },
+    deleteTimeoutSession(){
+        return `DELETE FROM session WHERE timeout < datetime('now', 'localtime')`;
     }
 }
 const table = {
