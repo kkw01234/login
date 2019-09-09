@@ -8,18 +8,59 @@ export const nav = {
             return /*html*/`${this.not_log_in_status()}`;
     },
     log_in_status(validaty){
-        return /*html*/`<span class="logo"><a href="#"><img href= "/" src="../images/logo.png"></a></span><span><span style="color:white">${validaty.user_name}님 환영합니다.</span><span class="btn logout">Log out</span><span>`;
+        return /*html*/`<div class="navigator"><span class="logo">
+                            <a href="/">
+                                <img src="../images/logo.png">
+                            </a>
+                        </span>
+                        <span>
+                            <span style="color:white">${validaty.user_name}님 환영합니다.</span>
+                            <span class="btn logout">Log out</span>
+                            <img class="menuicon" src="../images/menu.svg" style="width:20px;height:20px">
+                        </span></div>
+                        <div class="menu" style="display:none"></div>`;
     },
     not_log_in_status(){
-        return /*html*/`<span class="logo"><a href="#"><img href= "/" src="../images/logo.png"></a></span><span><a class="btn" href="/loginpage">Sign in</a> <a class="btn" href="/registerpage"> Sign up</a></span>`
+        return /*html*/`<div class="navigator"><span class="logo">
+                            <a href="#">
+                                <img href= "/" src="../images/logo.png">
+                            </a>
+                        </span>
+                        <span>
+                            <a class="btn" href="/loginpage">Sign in</a> 
+                            <a class="btn" href="/registerpage"> Sign up</a>
+                            <img class="menuicon" src="../images/menu.svg" style="width:20px;height:20px">
+                        </span></div>
+                        <div class="menu" style="display:none"></div>`
+    },
+    setMenu(){
+        const menu = document.querySelector(".menu");
+        menu.innerHTML = 
+        /*html*/`<ul>
+                    <li>HOME</li>
+                    <li>ABOUT US</li>
+                    <li>CONTANT</li>
+                </ul>`;
     },
     otherwise(){
         return ``;
     },
-    addEvent(button){
-        button.addEventListener("click", this.logoutHandler);
+    addLogoutEvent(){
+        const logout = document.querySelector(".logout");
+        logout.addEventListener("click", this.addLogoutHandler); 
     },
-    logoutHandler(){
+    addMenuEvent(){
+        const menuicon = document.querySelector(".menuicon");
+        menuicon.addEventListener('click',()=>{
+            const menu = document.querySelector(".menu");
+            if(menu.style.display === 'none'){
+                menu.style.display = 'block';
+            }else{
+                menu.style.display = 'none';
+            }
+        });
+    },
+    addLogoutHandler(){
         fetch("/loginpage/logout").then(response=>{
             response.json().then(data=>{
                 console.log(data);
@@ -34,11 +75,18 @@ export const nav = {
                     
             });
         });
+    }, 
+    addMenuButtonHandler(){
+        
     },
     setNav(validatyCookie){
         routerMap.nav.innerHTML = nav.render(validatyCookie);
+        this.setMenu();
         if(validatyCookie.user_id !== ''){
-            nav.addEvent(document.querySelector(".logout"));
+            this.addLogoutEvent();
         }
-    }
+        this.addMenuEvent();
+        
+    },
+   
 }

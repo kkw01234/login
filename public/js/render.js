@@ -95,6 +95,9 @@ const routerMap = {
         }
      
     },
+    "/loadMenu":function(){
+
+    },
     otherwise() { /* Error*/
         routerMap.section.innerHTML = 'NOT FOUND';
     }
@@ -110,15 +113,15 @@ const router = (address, validatyCookie = false) => {
 }
 const navigator = document.querySelector("nav");
 navigator.addEventListener('click', e => {
-    console.log('click', e.target.nodeName);
-    if (!e.target) return;
+    
+    if (!e.target || e.target.nodeName !== 'A') return;
     e.preventDefault();
+    console.log('click', e.target.nodeName);
     const path = e.target.getAttribute('href');
     history.pushState({ path }, null, path);
     router(path);
 });
 window.addEventListener('popstate', e => {
-    console.log('popstate',e);
     router(e.state.path);
 });
 routerMap.init();

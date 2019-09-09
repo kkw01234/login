@@ -1,11 +1,21 @@
-nav{
+nav {
+    display: flex;
+    flex-direction: column;
+    background-color : #5a96ff;
+}
+.navigator{
     display: flex;   
     justify-content: space-between;
-    background-color : #5a96ff;
     padding : 0.7em
 }
 nav > span {
     max-width: 300px
+}
+nav .menu{
+    background-color : #dce9ff;
+}
+nav li{
+    list-style:none;
 }
 .logo{
 
