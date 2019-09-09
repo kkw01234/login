@@ -34,7 +34,7 @@ class SessionRepository{
      * @param {String} session_id session id
      * @returns {Boolean} 잘 실행되면 True 실행되지 않으면 False 
      */
-    async deleteSession(sessionid){
+    async deleteSession(session_id){
         return await this.dao.run(query.deleteSession(),[session_id]);
     }
     /**
