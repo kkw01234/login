@@ -10,27 +10,27 @@ export const nav = {
     log_in_status(validaty){
         return /*html*/`<div class="navigator"><span class="logo">
                             <a href="/">
-                                <img src="../images/logo.png">
+                                <img class="logo" src="../images/logo.png">
                             </a>
                         </span>
-                        <span>
+                        <span class="right-nav">
                             <span style="color:white;font-size:1.2em">${validaty.user_name}님 환영합니다.</span>
                             <span class="btn logout">Log out</span>
                             <span class="btn mypage">My page</span>
-                            <img class="menuicon" src="../images/menu.svg" style="width:20px;height:20px">
+                            <img class="menuicon" src="../images/menu.svg" >
                         </span></div>
                         <div class="menu" style="display:none"></div>`;
     },
     not_log_in_status(){
-        return /*html*/`<div class="navigator"><span class="logo">
-                            <a href="#">
-                                <img href= "/" src="../images/logo.png">
+        return /*html*/`<div class="navigator"><span>
+                            <a href="/">
+                                <img class="logo" src="../images/logo.png">
                             </a>
                         </span>
-                        <span>
+                        <span class="right-nav">
                             <a class="btn" href="/loginpage">Sign in</a> 
                             <a class="btn" href="/registerpage"> Sign up</a>
-                            <img class="menuicon" src="../images/menu.svg" style="width:20px;height:20px">
+                            <img class="menuicon" src="../images/menu.svg">
                         </span></div>
                         <div class="menu" style="display:none"></div>`
     },
@@ -38,7 +38,7 @@ export const nav = {
         const menu = document.querySelector(".menu");
         menu.innerHTML = 
         /*html*/`<ul>
-                    <li>HOME</li>
+                    <li><a href="/">HOME</a></li>
                     <li>ABOUT US</li>
                     <li>CONTANT</li>
                 </ul>`;

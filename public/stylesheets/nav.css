@@ -16,7 +16,18 @@ nav .menu{
 }
 nav li{
     list-style:none;
+    font-size: 1.5em;
+    margin : 0.2em;
+}
+.menuicon{
+    width:30px;
+    height: 30px;
 }
 .logo{
+    width:150px;
+    height: auto;
 
+}
+.right-nav{
+    margin-top : 0.5em;
 }
