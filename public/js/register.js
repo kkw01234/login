@@ -20,14 +20,16 @@ const registerEnum = {
     INVALID_EMAIL: { content: `이메일 주소를 확인하세요`, color: "red" },
     INVALID_PHONE_NUMBER: { content: "형식에 맞지않는 번호입니다.", color: `red` },
     OVER_THREE_TAGS: { content: "관심사를 3개 이상 입력해 주세요", color: `red` },
+    
+    
     // CHECK_INPUT_USER:{content:`${this.key}를 확인해주세요`,color:`red`,setKey(key){this.key = key;return this;}}
 }
 
 export const register = {
     render() {
-        return `
+        return /*html*/`
         <div class="title">회원가입</div>
-        <form action="" name="register" method="post" id="registerForm">
+        <form>
         <div class="input-container">
             <p>아이디</p>
             <div class="inputText">
@@ -105,7 +107,7 @@ export const register = {
         </div>
         <div class="btn-container">
             <button type="button" class="btn btn-middle" id="initialization-button">초기화</button>
-            <button type="button" class="btn btn-middle" id="register-button">가입하기</input>
+            <button type="button" class="btn btn-middle" id="register-button">가입하기</button>
         </div>
         </form>
     <div id="register-modal" class="modal">
@@ -294,21 +296,21 @@ const birth = {
         const birthDateform = document.querySelector('input[name=birthDate]');
         const errordiv = document.querySelector('#birthError');
         for (let i = 1; i <= 12; i++) {
-            birthMonthform.insertAdjacentHTML("beforeend", `<option value="${i}">${i}</option>`)
+            birthMonthform.insertAdjacentHTML("beforeend", `<option value="${i}">${i}</option>`);
         }
         birthYearform.addEventListener("input", () => {
             yearChecking = false;
-            const sentence = this.checkBirthYear(birthYearform.value);
-            insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
-            if (sentence == "") {
+            const result = this.checkBirthYear(birthYearform.value);
+            insertSentenceHTML(errordiv, result.content, result.color);
+            if (result == registerEnum.DEFAULT) {
                 yearChecking = true;
-                const monthSentence = this.checkBirthYear(birthYearform.value);
-                const dateSentence = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
-                if (!(monthSentence === '')) {
-                    insertSentenceHTML(errordiv, monthChecking, "red");
+                const monthResult = this.checkBirthYear(birthYearform.value);
+                const dateResult = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
+                if (monthResult === registerEnum.INVALID_BIRTH_MONTH) {
+                    insertSentenceHTML(errordiv, monthResult.content, monthResult.color);
                     monthChecking = false;
-                } else if (!(dateSentence === '')) {
-                    insertSentenceHTML(errordiv, dateSentence, "red");
+                } else if (dateResult === registerEnum.INVALID_BIRTH_DATE) {
+                    insertSentenceHTML(errordiv, dateResult.content, dateResult.color);
                     dateChecking = false;
                 }
             }
@@ -316,29 +318,27 @@ const birth = {
         });
         birthMonthform.addEventListener("input", () => {
             monthChecking = false;
-            const sentence = this.checkBirthMonth(birthMonthform.value);
-            console.log(birthMonthform.value);
-            insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
-            if (sentence === "") {
+            const result = this.checkBirthMonth(birthMonthform.value);
+            insertSentenceHTML(errordiv, result.content, result.color);
+            if (result === registerEnum.DEFAULT) {
                 monthChecking = true;
-                const yearSentence = this.checkBirthYear(birthYearform.value);
-                const dateSentence = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
-                console.log(dateSentence);
-                if (!(yearSentence === '')) {
+                const yearResult = this.checkBirthYear(birthYearform.value);
+                const dateResult = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
+                if (yearResult === registerEnum.INVALID_BIRTH_YEAR) {
                     yearChecking = false;
-                    insertSentenceHTML(errordiv, yearSentence, "red");
-                } else if (!(dateSentence === '')) {
+                    insertSentenceHTML(errordiv, yearResult.content, yearResult.color);
+                } else if (dateResult === registerEnum.INVALID_BIRTH_DATE) {
                     dateChecking = false;
-                    insertSentenceHTML(errordiv, dateSentence, "red");
+                    insertSentenceHTML(errordiv, dateResult.content, dateResult.color);
                 }
 
             }
         });
         birthDateform.addEventListener("input", () => {
             dateChecking = false;
-            const sentence = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
-            insertSentenceHTML(errordiv, sentence, sentence == "" ? "black" : "red");
-            if (sentence == "") {
+            const dateResult = this.checkBirthDate(birthYearform.value, birthMonthform.value, birthDateform.value);
+            insertSentenceHTML(errordiv, dateResult.content, dateResult.color);
+            if (dateResult === registerEnum.DEFAULT) {
                 dateChecking = true;
             }
         });
@@ -360,26 +360,26 @@ const birth = {
     },
     checkBirthYear(year) {
         if (year.length !== 4) {
-            return "태어난 년도 4자리를 정확하게 입력하세요";
+            return registerEnum.INVALID_BIRTH_YEAR;
         }
         const date = new Date().getFullYear();
         if (date - year < 15 || date - year > 99) {
-            return "15세 이상 99세 이하일 경우만 회원가입 하실 수 있습니다.";
+            return registerEnum.UNABLE_REGISTER;
         }
-        return "";
+        return registerEnum.DEFAULT;
     },
     checkBirthMonth(month) {
-        if (month == "") {
-            return "월을 선택해주세요";
+        if (month === "") {
+            return registerEnum.INVALID_BIRTH_MONTH;
         }
-        return "";
+        return registerEnum.DEFAULT;
     },
     checkBirthDate(year, month, date) {
         if (year.length !== 4) {
-            return "태어난 년도 4자리를 정확하게 입력하세요";
+            return registerEnum.INVALID_BIRTH_YEAR;
         }
         if (date < 0) {
-            return `정확히 입력해주세요`;
+            return registerEnum.INVALID_BIRTH_DATE;
         }
         switch (month * 1) {
             case 1:
@@ -390,7 +390,7 @@ const birth = {
             case 10:
             case 12:
                 if (date > 31) {
-                    return `${month}월은 31일까지 있습니다.`;
+                    return registerEnum.INVALID_BIRTH_DATE;
                 }
                 break;
             case 4:
@@ -398,24 +398,23 @@ const birth = {
             case 9:
             case 11:
                 if (date > 30) {
-                    return `${month}월은 30일까지 있습니다.`;
+                    return registerEnum.INVALID_BIRTH_DATE;
                 }
                 break;
             case 2:
                 if (this.checkLeapYear(year)) {
                     if (date > 29) {
-                        return `${year}년 ${month}월은 29일까지 있습니다.`;
+                        return registerEnum.INVALID_BIRTH_DATE;
                     }
                 }
                 if (date > 28) {
-                    return `${year}년 ${month}월은 28일까지 있습니다.`;
+                    return registerEnum.INVALID_BIRTH_DATE;
                 }
                 break;
             default:
-                console.log(month)
-                return `월을 선택해주세요`;
+                return registerEnum.INVALID_BIRTH_MONTH;
         }
-        return ``;
+        return registerEnum.DEFAULT;
     },
     checkLeapYear(year) {
         if (year % 4) {
@@ -484,9 +483,9 @@ const phone = {
         const errordiv = document.querySelector("#phoneError");
         phoneform.addEventListener("input", () => {
             phoneChecking = false;
-            const sentence = this.checkPhone(phoneform.value);
-            insertSentenceHTML(errordiv, sentence, sentence === "" ? "black" : "red");
-            if (sentence === "") {
+            const result = this.checkPhone(phoneform.value);
+            insertSentenceHTML(errordiv, result.content, result.color);
+            if (result === registerEnum.DEFAULT) {
                 phoneChecking = true;
             }
         });
@@ -504,14 +503,13 @@ const phone = {
     },
     checkPhone(phone) {
         if (phone.length < 10 || phone.length > 11) {
-            return "형식에 맞지 않는 번호입니다.";
+            return registerEnum.INVALID_PHONE_NUMBER;
         } else if (!(phone[0] * 1 === 0 && phone[1] * 1 === 1 && phone[2] * 1 === 0)) {
-            return "형식에 맞지 않는 번호입니다.";
+            return registerEnum.INVALID_PHONE_NUMBER;
         }
         const regExp = /[0-9]+/;
         const result = regExp.test(phone);
-        console.log(result);
-        return result ? "" : "형식에 맞지 않는 번호입니다.";
+        return result ? registerEnum.DEFAULT : registerEnum.INVALID_PHONE_NUMBER;
     }
 }
 const interests = {
@@ -526,9 +524,9 @@ const interests = {
                 this.interestList.pop();
                 console.log(this.interestList);
                 if (!this.checkInterests()) {
-                    insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
+                    insertSentenceHTML(document.querySelector("#interestsError"), registerEnum.OVER_THREE_TAGS.content, registerEnum.OVER_THREE_TAGS.color);
                 } else
-                    insertSentenceHTML(document.querySelector('#interestsError'), "");
+                    insertSentenceHTML(document.querySelector('#interestsError'), registeEnum.DEFAULT);
 
             }
         });
@@ -553,9 +551,9 @@ const interests = {
                 interestForm.value = "";
                 checking = false;
                 if (!this.checkInterests()) {
-                    insertSentenceHTML(document.querySelector("#interestsError"), "관심사를 3개이상 입력해주세요", "red");
+                    insertSentenceHTML(document.querySelector("#interestsError"), registerEnum.OVER_THREE_TAGS.content, registerEnum.OVER_THREE_TAGS.color);
                 } else
-                    insertSentenceHTML(document.querySelector('#interestsError'), "");
+                    insertSentenceHTML(document.querySelector('#interestsError'), registerEnum.DEFAULT.content);
             }
         });
     },
@@ -777,7 +775,6 @@ const registerButton = {
             관심사: interestsValue,
             약관: checkTerm
         }
-        console.log(registerUser);
         for (let key in registerUser) {
 
             if (!registerUser[key]) {
@@ -803,32 +800,28 @@ const registerButton = {
             }
 
         }
-        const interestsHidden = document.querySelector("input[name=interests]");
-        /*sha-512를 이용한 암호화(단방향성)*/
-        // document.querySelector('input[name=password]').value = hex_sha512(idValue + passwordValue);
-        // document.querySelector('input[name=reconfirmationPassword]').value = "";
-        // interestsHidden.setAttribute("value", interestsValue);
-        fetch(`/registerpage/register`,{
-            method :`post`,
-            body : registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue),
-            headers : {
+        
+        fetch(`/registerpage/register`, {
+            method: `post`,
+            body: registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue),
+            headers: {
                 "Content-Type": "application/json"
             }
-        }).then(response=>{
-            response.json().then(data=>{
-                if(data.result){
-                    history.pushState(null,null,"/");
-                    router("/",true);
+        }).then(response => {
+            response.json().then(data => {
+                if (data.result) {
+                    history.pushState(null, null, "/");
+                    router("/", true);
                 }
             });
         });
-      
+
         return true;
     },
     makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue) {
         return JSON.stringify({
             id: idValue,
-            password: hex_sha512(idValue+passwordValue),
+            password: hex_sha512(idValue + passwordValue),
             name: nameValue,
             birth: birthValue,
             gender: genderValue,
