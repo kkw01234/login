@@ -95,7 +95,6 @@ export const login = {
         
         const id = document.querySelector("input[name=loginid]");
         const password = document.querySelector("input[name=loginpassword]");
-        console.log(id.value, password.value);
         fetch('/loginpage/login',{
             method:`post`,
             body:JSON.stringify({
@@ -111,7 +110,7 @@ export const login = {
                 if(res.result){
                     router("/");
                     history.pushState("",null,"/");
-                    
+                    return;    
                 }
                 const printError = document.querySelector("#printError");
                 printError.style.textAlign = "center";

@@ -1,5 +1,6 @@
 const path = require('path');
 const dbname = path.resolve(__dirname, `ConnectFoundation.db`);
+
 const query = {
     createUserTable() {
         return `CREATE TABLE IF NOT EXISTS user(
@@ -21,7 +22,7 @@ const query = {
             timeout TEXT
         )`
     },
-    checkId(id) {
+    checkId() {
         return `SELECT user_id FROM user WHERE user_id = ?`;
     },
     regtsterUser() {
@@ -42,7 +43,7 @@ const query = {
     deleteTimeoutSession(){
         return `DELETE FROM session WHERE timeout < datetime('now', 'localtime')`;
     },
-    updateSession(maxAge){
+    updateSessionTime(maxAge){
         return `UPDATE session SET timeout = datetime('now', 'localtime', '+${maxAge/1000} seconds') where session_id = ?`;
     }
 }

@@ -14,8 +14,9 @@ export const nav = {
                             </a>
                         </span>
                         <span>
-                            <span style="color:white">${validaty.user_name}님 환영합니다.</span>
+                            <span style="color:white;font-size:1.2em">${validaty.user_name}님 환영합니다.</span>
                             <span class="btn logout">Log out</span>
+                            <span class="btn mypage">My page</span>
                             <img class="menuicon" src="../images/menu.svg" style="width:20px;height:20px">
                         </span></div>
                         <div class="menu" style="display:none"></div>`;

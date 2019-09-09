@@ -30,7 +30,7 @@ app.use(async function(req,res,next){
     });
     try{
       const cookie = await sessionRepository.selectSession(req.cookies.sessionid || 0);
-      sessionRepository.updateSession(cookie[0]);
+      sessionRepository.updateSessionTime(cookie[0]);
   
       if(cookie.length > 0){
         res.cookie('sessionid', cookie[0].session_id,{
