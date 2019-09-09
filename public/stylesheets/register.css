@@ -1,9 +1,5 @@
 
-body{
-    width : 100%;
-    height : 100vh;
-    background: #eeeeee
-}
+
 .title{
     text-align: center;
     font-size:2.2em;
@@ -58,37 +54,7 @@ p{
     width: 32em;
 }
 
-/*버튼*/
-.btn-container{
-    display: inline-flex;
-    justify-content: center;
-    width:100%;
-}
-.btn{
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    background-color:#23cf5d;
-    border: none;
-    color: white;
-    text-align: center;
-    margin: 5px 5px;
-    cursor: pointer;  
-}
-.btn.btn-disabled{
-    background-color:#999999;
 
-}
-.btn.btn-small{
-    width:6em;
-    height: 2em;
-    font-size:1em;
-}
-.btn.btn-middle{
-    width:6em;
-    height:2em;
-    font-size: 1.8em;
-}
 
 .terms{
     resize: none;
@@ -131,7 +97,7 @@ footer{
     text-align: center;
 
     position: relative;
-    background-color:#aaaaaa;
+    background-color:#cccccc;
     padding : 0.7em;
     margin-top: auto;
 }
