@@ -81,7 +81,7 @@ export const login = {
         button.textContent = type;
         button.style.width = "100%";
         button.addEventListener("click", () => {
-            window.location.href = "/register";
+            window.location.href = "/registerpage";
         });
         align1.className = "col-md-3 col-xs-3 col-sm-3";
         align2.className = "col-md-7 col-xs-7 col-sm-7 loginform-container";

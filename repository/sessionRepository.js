@@ -18,13 +18,12 @@ class SessionRepository{
     }
     async selectSession(sessionid){
         if(!sessionid)
-            return false;
+            return [];
         return await this.dao.all(query.findSession(),[sessionid]);
     }
     async updateSession(session){//주기변경
         if(!session)
             return false;
-            console.log(session);
         return await this.dao.run(query.updateSession(setCookieTime()),[session.session_id]);
     }
     async deleteTimeoutSession(){

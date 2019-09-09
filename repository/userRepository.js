@@ -34,7 +34,10 @@ class UserRepository{
      * 
      */
     async insertUser(user){
-        return await this.dao.run(query.regtsterUser(),[user.id,user.password,user.name,[user.birthYear,user.birthMonth,user.birthDate].join("-"),user.gender,user.email,user.phone,user.interests])
+        if(user.id == null || user.password == null || user.name==null || user.birth==null || user.gender==null || user.email == null || user.interests == null){
+            return false;
+        }
+        return await this.dao.run(query.regtsterUser(),[user.id,user.password,user.name,user.birth.join("-"),user.gender,user.email,user.phone,user.interests.join(",")])
     }
     /**
      * if user want to log in, check id and password

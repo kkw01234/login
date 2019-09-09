@@ -9,9 +9,9 @@ router.get('/',async function (req, res, next) {
   
   const firstloading = req.query.firstloading || false;
   if(firstloading){
-    res.send({title : "로그인", validatycookie : req.validatyCookie});
+    res.send({title : "로그인", validatyCookie : req.validatyCookie});
   }else{
-    res.render('index',{title:"로그인",address:"/loginpage", validatycookie : req.validatyCookie});
+    res.render('index',{title:"로그인",address:"/loginpage", validatyCookie : req.validatyCookie});
   }
 
 });
@@ -25,10 +25,16 @@ router.post('/login', async function (req, res, next) {
     await sessionRepository.insertSession(sessionid,result[0].user_id,result[0].user_name);
     res.cookie('sessionid', sessionid,{
       maxAge : setCookieTime()
-    })
-    res.send({ result: true, validatyCookie : true });
+    });
+    res.send({ result: true, validatyCookie : {
+      user_id : result[0].user_id,
+      user_name : result[0].user_name
+    } });
   } else {
-    res.send({ result: false, validatyCookie : false });
+    res.send({ result: false, validatyCookie : {
+      user_id :"",
+      user_name : ""
+    } });
   }
 });
 router.get("/logout",async function(req,res,next){

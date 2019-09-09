@@ -810,7 +810,7 @@ const registerButton = {
         // interestsHidden.setAttribute("value", interestsValue);
         fetch(`/registerpage/register`,{
             method :`post`,
-            body : this.makeJSON(),
+            body : registerButton.makeJSON(idValue, passwordValue, nameValue, birthValue, genderValue, emailValue, phoneValue, interestsValue),
             headers : {
                 "Content-Type": "application/json"
             }

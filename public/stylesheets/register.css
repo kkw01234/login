@@ -66,9 +66,9 @@ p{
     width:100%;
 }
 .btn{
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     background-color:#23cf5d;
     border: none;
     color: white;
@@ -133,8 +133,7 @@ footer{
 
     position: relative;
     background-color:#aaaaaa;
-    
-    top:7em;
-    height: 4em;
+    padding : 0.7em;
+    margin-top: auto;
 }
 

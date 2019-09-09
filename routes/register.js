@@ -3,7 +3,7 @@ const userRepository = require("../repository/userRepository.js");
 const sessionRepository = require("../repository/sessionRepository.js");
 const express = require('express');
 const router = express.Router();
-const {validateCookie} = require("../utils/utils.js");
+const {validateCookie,setCookieTime} = require("../utils/utils.js");
 const uuidv4 = require('uuid/v4');
 /* GET registerpage listing. */
 router.get('/', function(req, res, next) {
@@ -25,6 +25,7 @@ router.post('/register',async function(req,res,next){
     // if(sessionid){
     //   res.send({result :"if you want to sign up, log out first"});
     // }
+    console.log(req.body);
     const userResult = await userRepository.insertUser(req.body);
     const sessionid = uuidv4();
     const sessionResult = await sessionRepository.insertSession(sessionid,req.body.id,req.body.name);
@@ -32,7 +33,7 @@ router.post('/register',async function(req,res,next){
       res.cookie('sessionid', sessionid,{
         maxAge : setCookieTime()
       })
-      res.send({result : true,validatyCookie:true});
+      res.send({result : true,validatyCookie:{user_id : req.body.id, user_name:req.body.name}});
       // res.render("index",{title: "메인페이지", address:""});
     }else
       res.send({result : false,validatyCookie:false});

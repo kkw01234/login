@@ -10,7 +10,7 @@ var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 const sessionRepository = require('./repository/sessionRepository.js');
 const {query} = require("./db/database.js");
-const {validateCookie} = require("./utils/utils.js");
+const {validateCookie,setCookieTime} = require("./utils/utils.js");
 var app = express();
 
 // view engine setup
@@ -31,7 +31,18 @@ app.use(async function(req,res,next){
     setImmediate(()=>{
       sessionRepository.updateSession(cookie[0]);
     });
-    req.validatyCookie = validateCookie(cookie);
+    if(cookie.length > 0){
+      res.cookie('sessionid', cookie[0].session_id,{
+        maxAge : setCookieTime()
+      });
+      if(validateCookie(cookie))
+          req.validatyCookie = {
+            user_id : cookie[0].user_id,
+            user_name : cookie[0].user_name
+          };
+    }else
+        req.validatyCookie = {user_id : "", user_name :""};
+    console.log(req.validatyCookie);
     next();
 });
 

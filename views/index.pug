@@ -20,4 +20,8 @@ block content
 
     script(type="module").
       import {router} from "./js/render.js";
-      router(`#{address}`||`/`,#{validatyCookie});
+      console.log(`#{validatyCookie.user_id}`);
+      router(`#{address}`||`/`,{
+        user_id : `#{validatyCookie.user_id}`,
+        user_name : `#{validatyCookie.user_name}`
+      });

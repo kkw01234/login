@@ -1,0 +1,12 @@
+nav{
+    display: flex;   
+    justify-content: space-between;
+    background-color : #5a96ff;
+    padding : 0.7em
+}
+nav > span {
+    max-width: 300px
+}
+.logo{
+
+}
