@@ -2,7 +2,8 @@
 export const main = {
     render(){
         return `
-        <div> This is main Page</div>
+        <div class="title"><p>Connect Possibility</p></div>
+        <div class="duck"><img src="../images/duck_talk.png"></img></div>
         `;
     },
     login_status(){

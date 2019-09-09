@@ -1,3 +1,50 @@
 #main-container{
-    /* background-image: url('../images/background.jpg'); */
+    background-image: linear-gradient(269deg, #69d2f5, #5a96ff);
+    width:100%;
+    height: 500px;
 }
+#main-container p {
+    color : white;
+}
+#main-container .duck{
+    text-align:center;
+}
+#main-container .duck img{
+    width:20em;
+    height: auto;
+    animation: rotating 3s linear infinite;
+}
+
+@keyframes rotating {
+    0% {
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+  
+    40% {
+      -ms-transform: rotate(-10deg);
+      -moz-transform: rotate(-10deg);
+      -webkit-transform: rotate(-10deg);
+      -o-transform: rotate(-10deg);
+      transform: rotate(-10deg);
+    }
+  
+    80% {
+      -ms-transform: rotate(10deg);
+      -moz-transform: rotate(10deg);
+      -webkit-transform: rotate(10deg);
+      -o-transform: rotate(10deg);
+      transform: rotate(10deg);
+    }
+  
+    100% {
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+  }
