@@ -511,6 +511,7 @@ const phone = {
         return result ? registerEnum.DEFAULT : registerEnum.INVALID_PHONE_NUMBER;
     }
 }
+//관심사
 const interests = {
     init() {
         this.interestList = [];
