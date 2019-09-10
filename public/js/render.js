@@ -23,7 +23,7 @@ const routerMap = {
                 routerMap.footer.innerHTML = footer.render();
 
                 response.json().then((res) => {
-                    routerMap.title = res.title;
+                    routerMap.title.textContent = res.title;
                     nav.setNav(res.validatyCookie);
                 });
             });
@@ -48,7 +48,7 @@ const routerMap = {
                 routerMap.header.innerHTML = header.render();
                 routerMap.footer.innerHTML = footer.render();
                 response.json().then((res) => {
-                    routerMap.title = res.title;
+                    routerMap.title.textContent = res.title;
                     nav.setNav(res.validatyCookie);
                 });
             });
@@ -74,7 +74,7 @@ const routerMap = {
                 routerMap.footer.innerHTML = footer.render();
                 if (routerMap.firstloading) {
                     response.json().then((res) => {
-                        routerMap.title = res.title;
+                        routerMap.title.textContent = res.title;
                         nav.setNav(res.validatyCookie);
                     });
                 }
