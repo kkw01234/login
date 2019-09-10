@@ -6,7 +6,6 @@ class UserRepository{
      * @constructor
      * @param {dao} dao can execute query statment
      */
-    
     constructor(dao){
         this.dao = dao;
     }
@@ -19,6 +18,7 @@ class UserRepository{
         return await this.dao.run(query.createUserTable());
     }
     /**
+     * find id
      * 
      * @param {String} id user's id
      * @returns {String} query result 
@@ -37,7 +37,7 @@ class UserRepository{
         // if(user.id == null || user.password == null || user.name==null || user.birth==null || user.gender==null || user.email == null || user.interests == null){
         //     return false;
         // }
-        return await this.dao.run(query.regtsterUser(),[user.id,user.password,user.name,user.birth.join("-"),user.gender,user.email,user.phone,user.interests.join(",")])
+        return await this.dao.run(query.registerUser(),[user.id,user.password,user.name,user.birth.join("-"),user.gender,user.email,user.phone,user.interests.join(",")])
     }
     /**
      * if user want to log in, check id and password

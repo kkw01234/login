@@ -6,7 +6,6 @@ var logger = require('morgan');
 var favicon = require('serve-favicon');
 // var bodyParser = require('body-parser'); /*json 구조*/ 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 const sessionRepository = require('./repository/sessionRepository.js');
@@ -54,7 +53,6 @@ app.use(async function(req,res,next){
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/loginpage', loginRouter);
 app.use('/registerpage', registerRouter);
 

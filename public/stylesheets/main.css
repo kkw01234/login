@@ -1,7 +1,8 @@
 #main-container{
     background-image: linear-gradient(269deg, #69d2f5, #5a96ff);
-    width:100%;
-    height: 500px;
+
+    width: 100%;
+    height: 100%;
 }
 #main-container p {
     color : white;
@@ -10,7 +11,7 @@
     text-align:center;
 }
 #main-container .duck img{
-    width:20em;
+    width:25em;
     height: auto;
     animation: rotating 3s linear infinite;
 }

@@ -64,7 +64,6 @@ export const nav = {
     addLogoutHandler(){
         fetch("/loginpage/logout").then(response=>{
             response.json().then(data=>{
-                console.log(data);
                 if(data.result === true){
                     history.pushState(null,null,"/")
                     router("/");

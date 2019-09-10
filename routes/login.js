@@ -3,7 +3,7 @@ const router = express.Router();
 const uuidv4 = require('uuid/v4');
 const userRepository = require("../repository/userRepository.js");
 const sessionRepository = require("../repository/sessionRepository.js");
-const {validateCookie,setCookieTime} = require("../utils/utils.js");
+const {setCookieTime} = require("../utils/utils.js");
 
 router.get('/',async function (req, res, next) {
   

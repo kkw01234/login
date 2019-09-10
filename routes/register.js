@@ -3,7 +3,7 @@ const userRepository = require("../repository/userRepository.js");
 const sessionRepository = require("../repository/sessionRepository.js");
 const express = require('express');
 const router = express.Router();
-const {validateCookie,setCookieTime} = require("../utils/utils.js");
+const {setCookieTime} = require("../utils/utils.js");
 const uuidv4 = require('uuid/v4');
 /* GET registerpage listing. */
 router.get('/', function(req, res, next) {

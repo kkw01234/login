@@ -20,8 +20,6 @@ const routerMap = {
                 routerMap.section.id = "main-container";
                 routerMap.section.innerHTML = main.render();
                 routerMap.header.innerHTML = header.render();
-                console.log(validatyCookie);
-
                 routerMap.footer.innerHTML = footer.render();
 
                 response.json().then((res) => {
@@ -116,7 +114,6 @@ navigator.addEventListener('click', e => {
     
     if (!e.target || e.target.nodeName !== 'A') return;
     e.preventDefault();
-    console.log('click', e.target.nodeName);
     const path = e.target.getAttribute('href');
     history.pushState({ path }, null, path);
     router(path);

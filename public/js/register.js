@@ -194,7 +194,6 @@ const id = {
                 }
             }).then((res) => {
                 res.json().then(res => {
-                    console.log(res.result);
                     resolve(res.result);
                 });
             });
@@ -522,7 +521,6 @@ const interests = {
             if (!checking && e.keyCode == 8 && interestTag.children.length > 1) {
                 interestTag.removeChild(interestTag.children[interestTag.children.length - 2]);
                 this.interestList.pop();
-                console.log(this.interestList);
                 if (!this.checkInterests()) {
                     insertSentenceHTML(document.querySelector("#interestsError"), registerEnum.OVER_THREE_TAGS.content, registerEnum.OVER_THREE_TAGS.color);
                 } else
@@ -603,7 +601,7 @@ const terms = {
             modalContent.className = "modal-content modal-large";
             modalContent.innerHTML = "";
             modal.style.display = "block";
-            this.makeTerms(modalContent)
+            this.makeTerms(modalContent);
 
 
             const closingterms = modalContent.querySelector(".close");
@@ -750,10 +748,10 @@ const initializationButton = {
 const registerButton = {
     init() {
         const register = document.querySelector('#register-button');
-        register.addEventListener("click", this.checkRegisterForm);
+        register.addEventListener("click", this.checkRegisterHandler);
     },
 
-    checkRegisterForm() {
+    checkRegisterHandler() {
         const modal = document.querySelector(".modal");
         const idValue = id.getId();
         const passwordValue = password.getPassword();

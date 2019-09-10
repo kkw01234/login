@@ -90,7 +90,6 @@ export const login = {
         container.appendChild(align2);
     },
     checkIDAndPassword() {
-        //console.log("eee");
         //id, password check;
         
         const id = document.querySelector("input[name=loginid]");
@@ -106,7 +105,6 @@ export const login = {
             }
         }).then(response=>{
             response.json().then(res=>{
-                console.log(res);
                 if(res.result){
                     router("/");
                     history.pushState("",null,"/");

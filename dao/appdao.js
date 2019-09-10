@@ -24,7 +24,7 @@ const appDAO = {
      * return objects correspond to the query statement
      * query문의 모든 row를 반환해주는 함수
      * 
-      @param {String} query sql grammar
+     * @param {String} query sql grammar
      * @param {Array} parmas array of variables
      * @returns {Promise} promise with results
      * 
