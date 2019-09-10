@@ -34,9 +34,9 @@ class UserRepository{
      * 
      */
     async insertUser(user){
-        // if(user.id == null || user.password == null || user.name==null || user.birth==null || user.gender==null || user.email == null || user.interests == null){
-        //     return false;
-        // }
+        if(user.id == null || user.password == null || user.name==null || user.birth==null || user.gender==null || user.email == null || user.interests == null){
+            return false;
+        }
         return await this.dao.run(query.registerUser(),[user.id,user.password,user.name,user.birth.join("-"),user.gender,user.email,user.phone,user.interests.join(",")])
     }
     /**
