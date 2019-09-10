@@ -519,13 +519,15 @@ const interests = {
         const interestForm = document.querySelector("input[name=interestsform]");
         interestForm.addEventListener('keydown', (e) => {
             if (!checking && e.keyCode == 8 && interestTag.children.length > 1) {
-                interestTag.removeChild(interestTag.children[interestTag.children.length - 2]);
+                const deleteSpan = document.getElementsByClassName(`${interests.interestList.length}`)[0];
+                interestTag.removeChild(deleteSpan);
                 this.interestList.pop();
+                interestForm.value = deleteSpan.textContent;
+                
                 if (!this.checkInterests()) {
                     insertSentenceHTML(document.querySelector("#interestsError"), registerEnum.OVER_THREE_TAGS.content, registerEnum.OVER_THREE_TAGS.color);
                 } else
-                    insertSentenceHTML(document.querySelector('#interestsError'), registeEnum.DEFAULT);
-
+                    insertSentenceHTML(document.querySelector('#interestsError'), registeEnum.DEFAULT.content);
             }
         });
         interestForm.addEventListener("input", (e) => {
@@ -541,7 +543,8 @@ const interests = {
                 interestForm.value = "";
             } else if (result) {
                 const span = document.createElement('span');
-                span.classList.add("tag");
+                span.classList.add(`tag`);
+                span.classList.add(`${interests.interestList.length+1}`);
                 span.textContent = interestForm.value.split(",")[0];
                 this.interestList.push(span.textContent);
                 span.appendChild(this.makeClose(span));

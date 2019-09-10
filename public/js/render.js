@@ -119,7 +119,8 @@ navigator.addEventListener('click', e => {
     router(path);
 });
 window.addEventListener('popstate', e => {
-    router(e.state.path);
+    if(e.state.path !== null)
+        router(e.state.path);
 });
 routerMap.init();
 // router("/"); //처음 로드 할 때
