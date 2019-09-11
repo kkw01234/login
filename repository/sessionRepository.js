@@ -1,6 +1,6 @@
 
 const {appDAO} = require("../dao/appdao.js");
-const {query} =require("../db/database.js");
+const {query} =require("../utils/database.js");
 const {setCookieTime} = require("../utils/utils.js");
 class SessionRepository{
      /**
@@ -44,8 +44,8 @@ class SessionRepository{
      */
     async selectSession(sessionid){
         if(!sessionid)
-            return [];
-        return await this.dao.all(query.findSession(),[sessionid]);
+            return {};
+        return await this.dao.get(query.findSession(),[sessionid]);
     }
     /**
      * 접속할 때마다 Timeout을 변경하는 함수

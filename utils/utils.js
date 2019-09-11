@@ -5,9 +5,9 @@
  */
 
 const validateCookie = (cookie)=>{
-    if(Array.isArray(cookie) && cookie.length >0)
-        return true;
-    else return false;
+    if(!cookie.session_id)
+        return false;
+    else return true;
 }
 /**
  * @returns {Number} return expired cookie timer

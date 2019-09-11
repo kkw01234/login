@@ -21,10 +21,11 @@ router.post('/login', async function (req, res, next) {
   const password = req.body.loginpassword;
   try{
     const result = await userRepository.checkUser(id, password);
+    console.log(result)
     if (result.length > 0) {
-      const sessionid = uuidv4();
-      await sessionRepository.insertSession(sessionid,result[0].user_id,result[0].user_name);
-      res.cookie('sessionid', sessionid,{
+      const session_id = uuidv4();
+      await sessionRepository.insertSession(session_id,result[0].user_id,result[0].user_name);
+      res.cookie('session_id', session_id,{
         maxAge : setCookieTime()
       });
       res.send({ result: true, validatyCookie : {
@@ -44,10 +45,10 @@ router.post('/login', async function (req, res, next) {
 });
 router.get("/logout",async function(req,res,next){
   try{
-    const sessionid = req.cookies.sessionid || 0;
-    if(!sessionid)
+    const session_id = req.cookies.sessionid || 0;
+    if(!session_id)
         res.send({result: false});
-    const result = await sessionRepository.deleteSession(sessionid);
+    const result = await sessionRepository.deleteSession(session_id);
     if(result){
       res.clearCookie('sessionid');
       res.send({result: true});

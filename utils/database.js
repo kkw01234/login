@@ -1,5 +1,5 @@
 const path = require('path');
-const dbname = path.resolve(__dirname, `ConnectFoundation.db`);
+const dbname = path.resolve(__dirname, `../db/ConnectFoundation.db`);
 
 const query = {
     /**

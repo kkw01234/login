@@ -11,7 +11,7 @@ var registerRouter = require('./routes/register');
 const sessionRouter = require('./routes/session.js');
 const sessionRepository = require('./repository/sessionRepository.js');
 
-const {query} = require("./db/database.js");
+const {query} = require("./utils/database.js");
 const {validateCookie,setCookieTime} = require("./utils/utils.js");
 const fs = require('fs');
 var app = express();
@@ -55,6 +55,7 @@ app.use(function(err, req, res, next) {
   }
   
   logs.push(newLog);
+  console.log(newLog);
   fs.writeFileSync("./error/errorlog.json",JSON.stringify(logs));
   // render the error page
   res.status(err.status || 500);

@@ -1,5 +1,5 @@
 const {appDAO} = require("../dao/appdao.js");
-const { query } = require("../db/database.js");
+const { query } = require("../utils/database.js");
 
 class UserRepository{
     /**

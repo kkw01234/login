@@ -1,4 +1,4 @@
-const {dbname} = require("../db/database.js");
+const {dbname} = require("../utils/database.js");
 const sqlite3 = require('sqlite3').verbose();
 
 const appDAO = {

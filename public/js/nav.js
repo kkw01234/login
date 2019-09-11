@@ -2,6 +2,7 @@
 import {router,routerMap} from "./render.js";
 export const nav = {
     render(validaty){
+        console.log(validaty);
         if(validaty.user_name !== ""){
             return /*html*/`${this.log_in_status(validaty)}`;
         }else

@@ -34,10 +34,10 @@ router.post('/register',async function(req,res,next){
     try{
       const userResult = await userRepository.insertUser(req.body);
       console.log(userResult);
-      const sessionid = uuidv4();
-      const sessionResult = await sessionRepository.insertSession(sessionid,req.body.id,req.body.name);
+      const session_id = uuidv4();
+      const sessionResult = await sessionRepository.insertSession(session_id,req.body.id,req.body.name);
       if(userResult){
-        res.cookie('sessionid', sessionid,{
+        res.cookie('session_id', session_id,{
           maxAge : setCookieTime()
         })
         res.send({result : true,validatyCookie:{user_id : req.body.id, user_name:req.body.name}});
