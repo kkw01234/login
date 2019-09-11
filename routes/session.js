@@ -26,3 +26,5 @@ router.use(async function(req,res,next){
       next(e);
     }
 });
+
+module.exports = router;
