@@ -30,7 +30,7 @@ app.use(async function(req,res,next){
       sessionRepository.deleteTimeoutSession();
     });
     try{
-      const cookie = await sessionRepository.selectSession(req.cookies.sessionid || 0);
+      const cookie = await sessionRepository.selectSession(req.cookies.sessionid || 0); //get
       sessionRepository.updateSessionTime(cookie[0]);
   
       if(cookie.length > 0){
@@ -51,7 +51,7 @@ app.use(async function(req,res,next){
     }
     
 });
-
+/* */
 app.use('/', indexRouter);
 app.use('/loginpage', loginRouter);
 app.use('/registerpage', registerRouter);

@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
   }else
     res.render("index", {title:`회원가입 폼`,address:"/registerpage",validatyCookie:req.validatyCookie});
 });
+
 router.post('/checkid',async function(req,res,next){
     const id = req.body.id;
     try{
@@ -30,7 +31,6 @@ router.post('/register',async function(req,res,next){
     // if(sessionid){
     //   res.send({result :"if you want to sign up, log out first"});
     // }
-    console.log(req.body);
     try{
       const userResult = await userRepository.insertUser(req.body);
       console.log(userResult);
