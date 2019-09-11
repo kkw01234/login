@@ -8,7 +8,9 @@ var favicon = require('serve-favicon');
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
+const sessionRouter = require('./routes/session.js');
 const sessionRepository = require('./repository/sessionRepository.js');
+
 const {query} = require("./db/database.js");
 const {validateCookie,setCookieTime} = require("./utils/utils.js");
 const fs = require('fs');
@@ -25,33 +27,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 들어올때마다 Session Check
-app.use(async function(req,res,next){ 
-    setImmediate(()=>{
-      sessionRepository.deleteTimeoutSession();
-    });
-    try{
-      const cookie = await sessionRepository.selectSession(req.cookies.sessionid || 0); //get
-      sessionRepository.updateSessionTime(cookie[0]);
-  
-      if(cookie.length > 0){
-        res.cookie('sessionid', cookie[0].session_id,{
-          maxAge : setCookieTime()
-        });
-        if(validateCookie(cookie))
-            req.validatyCookie = {
-              user_id : cookie[0].user_id,
-              user_name : cookie[0].user_name
-            };
-      }else
-          req.validatyCookie = {user_id : "", user_name :""};
-      console.log(req.validatyCookie);
-      next();
-    }catch(e){
-      next(e);
-    }
-    
-});
+
 /* */
+app.use(sessionRouter);
 app.use('/', indexRouter);
 app.use('/loginpage', loginRouter);
 app.use('/registerpage', registerRouter);
